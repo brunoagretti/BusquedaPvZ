@@ -1,5 +1,5 @@
 package busquedapvz;
 
-public class ZombieEntity extends Entity{
+public class ZombieEntity extends CellContent{
 
 }

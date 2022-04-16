@@ -1,6 +1,6 @@
 package busquedapvz;
 
-public class Entity {
+public class CellContent {
 	Integer posX;
 	Integer posY;
 	

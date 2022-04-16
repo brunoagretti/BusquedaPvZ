@@ -1,5 +1,5 @@
 package busquedapvz;
 
-public class SunflowerEntity extends Entity{
+public class SunflowerEntity extends CellContent{
 
 }

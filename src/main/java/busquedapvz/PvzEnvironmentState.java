@@ -2,20 +2,21 @@ package busquedapvz;
 
 import frsf.cidisi.faia.state.EnvironmentState;
 
-public class PvzEnvironmentState extends EnvironmentState{
+public class PvzEnvironmentState extends EnvironmentState {
 	
-	private Entity world[][];
-	private Integer[] chomperPosition;
+	private CellContent world[][];
+	private Integer chomperPositionX;
+	private Integer chomperPositionY;
 	private Integer chomperEnergy;
 	
 	
 	
-	public PvzEnvironmentState(Entity[][] m) {
+	public PvzEnvironmentState(CellContent[][] m) {
         world = m;
     }
 
     public PvzEnvironmentState() {
-        world = new Entity[4][4];
+        world = new CellContent[4][4];
         this.initState();
     }
     
@@ -30,5 +31,39 @@ public class PvzEnvironmentState extends EnvironmentState{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public CellContent[][] getWorld() {
+		return world;
+	}
+
+	public void setWorld(CellContent[][] world) {
+		this.world = world;
+	}
+
+	public Integer getChomperPositionX() {
+		return chomperPositionX;
+	}
+
+	public void setChomperPositionX(Integer chomperPositionX) {
+		this.chomperPositionX = chomperPositionX;
+	}
+
+	public Integer getChomperPositionY() {
+		return chomperPositionY;
+	}
+
+	public void setChomperPositionY(Integer chomperPositionY) {
+		this.chomperPositionY = chomperPositionY;
+	}
+
+	public Integer getChomperEnergy() {
+		return chomperEnergy;
+	}
+
+	public void setChomperEnergy(Integer chomperEnergy) {
+		this.chomperEnergy = chomperEnergy;
+	}
+	
+	
 
 }
