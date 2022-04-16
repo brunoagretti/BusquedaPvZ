@@ -26,11 +26,20 @@ public class PvzEnvironmentState extends EnvironmentState {
 		
 	}
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String toString() {
+        StringBuffer str = new StringBuffer();
+
+        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
+        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
+            	str.append(world[i][j].toString());
+            	str.append(" ");
+            }
+        	str.append("\n");
+        }
+
+        return str.toString();
+    }
 
 	public CellContent[][] getWorld() {
 		return world;
@@ -63,6 +72,7 @@ public class PvzEnvironmentState extends EnvironmentState {
 	public void setChomperEnergy(Integer chomperEnergy) {
 		this.chomperEnergy = chomperEnergy;
 	}
+	
 	
 	
 
