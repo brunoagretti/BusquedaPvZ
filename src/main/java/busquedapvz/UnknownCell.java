@@ -1,7 +1,7 @@
 package busquedapvz;
 
 public class UnknownCell extends CellContent{
-	
+
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
@@ -11,4 +11,5 @@ public class UnknownCell extends CellContent{
 		
 		return str.toString();
 	}
+
 }

@@ -11,19 +11,26 @@ public class PvzEnvironmentState extends EnvironmentState {
 	
 	
 	
-	public PvzEnvironmentState(CellContent[][] m) {
-        world = m;
+	public PvzEnvironmentState(CellContent[][] world) {
+        this.world = world;
+        this.initState();
     }
 
     public PvzEnvironmentState() {
-        world = new CellContent[4][4];
+        initWorld();
         this.initState();
     }
     
 	@Override
 	public void initState() {
 		// TODO Auto-generated method stub
+		//Aca no iria la logica de los soles y demas, aca solo debemos inicializar
 		
+		chomperEnergy=5; //TODO randomize
+		chomperPositionX = 1; 
+		chomperPositionY = 1;
+		
+		world[chomperPositionY][chomperPositionX].setContainsAgent(true);
 	}
 
     @Override
@@ -32,7 +39,15 @@ public class PvzEnvironmentState extends EnvironmentState {
 
         for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
         	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
-            	str.append(world[i][j].toString());
+        		if(world[i][j].containsAgent()) {
+        			str.append("@");
+        			str.append(world[i][j].toString());
+        			
+        		}else {
+        			str.append(" ");
+        			str.append(world[i][j].toString());
+        			
+        		}
             	str.append(" ");
             }
         	str.append("\n");
@@ -73,7 +88,14 @@ public class PvzEnvironmentState extends EnvironmentState {
 		this.chomperEnergy = chomperEnergy;
 	}
 	
-	
+    private void initWorld(){
+    	world = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
+        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
+        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
+        		world[i][j] = new EmptyCell();
+            }
+        }
+    }
 	
 
 }

@@ -22,6 +22,8 @@ public class ChomperPerception extends Perception{
 	public void initPerception(Agent agent, Environment environment) {
 		// TODO Auto-generated method stub
 //		ChomperAgent chomperAgent = (ChomperAgent) agent;
+		initSensor();
+		
 		PvzEnvironment pvzEnvironment = (PvzEnvironment) environment;
 		PvzEnvironmentState environmentState =
 				pvzEnvironment.getEnvironmentState();
@@ -35,7 +37,7 @@ public class ChomperPerception extends Perception{
 			
 			environmentSensor[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
 			
-			if(actualEnvironmentState[chomperPositionY][i] != null) { //TODO null safe check
+			if(!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) { 
 				break;
 			}
 		}
@@ -43,26 +45,28 @@ public class ChomperPerception extends Perception{
 			
 			environmentSensor[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
 			
-			if(actualEnvironmentState[chomperPositionY][i] != null) { //TODO null safe check
+			if(!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) { 
 				break;
 			}
 		}
-		for(Integer j=0;j< PvzEnvironment.MAP_SIZE_Y;j++) {
+		for(Integer j=chomperPositionY;j< PvzEnvironment.MAP_SIZE_Y;j++) {
 			
 			environmentSensor[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
 			
-			if(actualEnvironmentState[j][chomperPositionX] != null) { //TODO null safe check
+			if(!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) { 
 				break;
 			}
 		}
-		for(Integer j=0;j< PvzEnvironment.MAP_SIZE_Y;j++) {
+		for(Integer j=chomperPositionY;j>=0;j--) {
 			
 			environmentSensor[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
 			
-			if(actualEnvironmentState[j][chomperPositionX] != null) { //TODO null safe check
+			if(!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) { 
 				break;
 			}
 		}
+		
+		environmentSensor[chomperPositionY][chomperPositionX].setContainsAgent(true);
 	
 	}
 	
@@ -70,13 +74,33 @@ public class ChomperPerception extends Perception{
     public String toString() {
         StringBuffer str = new StringBuffer();
 
-        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_X;i++) {
-        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_Y;i++) {
-            	str.append(environmentSensor[i][j].toString());
+        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
+        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
+        		
+        		if(environmentSensor[i][j].containsAgent()) {
+        			str.append("@");
+        			str.append(environmentSensor[i][j].toString());
+        			
+        		}else {
+        			str.append(" ");
+        			str.append(environmentSensor[i][j].toString());
+        			
+        		}
+            	str.append(" ");
             }
+        	str.append("\n");
         }
 
         return str.toString();
+    }
+    
+    private void initSensor(){
+    	environmentSensor = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
+        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
+        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
+        		environmentSensor[i][j] = new UnknownCell();
+            }
+        }
     }
 
 }
