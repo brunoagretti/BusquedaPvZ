@@ -24,4 +24,8 @@ public class SunflowerEntity extends CellContent{
 		return str.toString();
 	}
 	
+	public void addSuns(Integer amount) {
+		this.sunQuantity+=amount;
+	}
+	
 }
