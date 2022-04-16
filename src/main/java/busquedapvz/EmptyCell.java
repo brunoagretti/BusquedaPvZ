@@ -1,14 +1,14 @@
 package busquedapvz;
 
-public class ZombieEntity extends CellContent{
-	String name;
-	Integer hp;
+public class EmptyCell extends CellContent{
+	
+	
 	
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
 		
-		str.append("Z" + hp);
+		str.append("__");
 		
 		
 		return str.toString();
