@@ -7,12 +7,10 @@ import frsf.cidisi.faia.environment.Environment;
 public class ChomperPerception extends Perception{
 	
 
-	CellContent[][] environmentSensor;
-	Integer chomperEnergy;
+	CellContent[][] perceptedWorld;
 	Integer zombieAmountOnMap;
 	
 	public ChomperPerception() {
-		chomperEnergy = 10; //TODO: add randomness
 	}
 	
 	public ChomperPerception(Agent agent, Environment environment) {
@@ -42,7 +40,7 @@ public class ChomperPerception extends Perception{
 				
 		for(Integer i=chomperPositionX;i< PvzEnvironment.MAP_SIZE_X;i++) {
 			
-			environmentSensor[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
+			perceptedWorld[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
 			
 			if(!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) { 
 				break;
@@ -50,7 +48,7 @@ public class ChomperPerception extends Perception{
 		}
 		for(Integer i=chomperPositionX;i>=0;i--) {
 			
-			environmentSensor[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
+			perceptedWorld[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
 			
 			if(!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) { 
 				break;
@@ -58,7 +56,7 @@ public class ChomperPerception extends Perception{
 		}
 		for(Integer j=chomperPositionY;j< PvzEnvironment.MAP_SIZE_Y;j++) {
 			
-			environmentSensor[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
+			perceptedWorld[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
 			
 			if(!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) { 
 				break;
@@ -66,14 +64,14 @@ public class ChomperPerception extends Perception{
 		}
 		for(Integer j=chomperPositionY;j>=0;j--) {
 			
-			environmentSensor[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
+			perceptedWorld[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
 			
 			if(!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) { 
 				break;
 			}
 		}
 		
-		environmentSensor[chomperPositionY][chomperPositionX].setContainsAgent(true);
+		perceptedWorld[chomperPositionY][chomperPositionX].setContainsAgent(true);
 		
 	}
 	
@@ -84,13 +82,13 @@ public class ChomperPerception extends Perception{
         for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
         	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
         		
-        		if(environmentSensor[i][j].containsAgent()) {
+        		if(perceptedWorld[i][j].containsAgent()) {
         			str.append("@");
-        			str.append(environmentSensor[i][j].toString());
+        			str.append(perceptedWorld[i][j].toString());
         			
         		}else {
         			str.append(" ");
-        			str.append(environmentSensor[i][j].toString());
+        			str.append(perceptedWorld[i][j].toString());
         			
         		}
             	str.append(" ");
@@ -102,12 +100,23 @@ public class ChomperPerception extends Perception{
     }
     
     private void initSensor(){
-    	environmentSensor = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
+    	perceptedWorld = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
         for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
         	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
-        		environmentSensor[i][j] = new UnknownCell();
+        		perceptedWorld[i][j] = new UnknownCell();
             }
         }
     }
 
+	public void setZombieAmountOnMap(Integer zombieAmountOnMap) {
+		this.zombieAmountOnMap = zombieAmountOnMap;
+	}
+
+	public CellContent[][] getPerceptedWorld() {
+		return perceptedWorld;
+	}
+
+	public void setPerceptedWorld(CellContent[][] perceptedWorld) {
+		this.perceptedWorld = perceptedWorld;
+	}
 }

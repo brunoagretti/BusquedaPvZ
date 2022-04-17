@@ -21,8 +21,56 @@ public class PvzEnvironment extends Environment {
 	
 	@Override
 	public Perception getPercept() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ChomperPerception newPerception = new ChomperPerception();
+		
+		Integer chomperPositionX = getEnvironmentState().getChomperPositionX();
+		Integer chomperPositionY = getEnvironmentState().getChomperPositionY();
+		
+		CellContent[][] world = getEnvironmentState().getWorld();
+		
+		newPerception.setZombieAmountOnMap(getZombiesOnMap().size());
+		
+		CellContent[][] perceptedWorld = createMap();
+				
+		for(Integer i=chomperPositionX;i< PvzEnvironment.MAP_SIZE_X;i++) {
+			
+			perceptedWorld[chomperPositionY][i]=world[chomperPositionY][i];
+			
+			if(!(world[chomperPositionY][i] instanceof EmptyCell)) { 
+				break;
+			}
+		}
+		for(Integer i=chomperPositionX;i>=0;i--) {
+			
+			perceptedWorld[chomperPositionY][i]=world[chomperPositionY][i];
+			
+			if(!(world[chomperPositionY][i] instanceof EmptyCell)) { 
+				break;
+			}
+		}
+		for(Integer j=chomperPositionY;j< PvzEnvironment.MAP_SIZE_Y;j++) {
+			
+			perceptedWorld[j][chomperPositionX]=world[j][chomperPositionX];
+			
+			if(!(world[j][chomperPositionX] instanceof EmptyCell)) { 
+				break;
+			}
+		}
+		for(Integer j=chomperPositionY;j>=0;j--) {
+			
+			perceptedWorld[j][chomperPositionX]=world[j][chomperPositionX];
+			
+			if(!(world[j][chomperPositionX] instanceof EmptyCell)) { 
+				break;
+			}
+		}
+		
+		perceptedWorld[chomperPositionY][chomperPositionX].setContainsAgent(true);
+		
+		newPerception.setPerceptedWorld(perceptedWorld);
+		
+		return newPerception;
 	}
 	
 	@Override
@@ -76,7 +124,7 @@ public class PvzEnvironment extends Environment {
 				Position newPos = zombie.getPosition().clone();
 				newPos.decrementX();
 				if(newPos.getX() < 0)
-					// TODO: Fire event.
+					// TODO: Fire fail event.
 				
 				if (!((PvzEnvironmentState) this.environmentState).zombieOnPosition(newPos)) {
 					moveZombie(zombie.getPosition(), newPos);
@@ -98,5 +146,15 @@ public class PvzEnvironment extends Environment {
 	public ArrayList<ZombieEntity> getZombiesOnMap() {
 		return zombiesOnMap;
 	}
+	
+    private CellContent[][] createMap(){
+    	CellContent[][] world = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
+        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
+        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
+        		world[i][j] = new UnknownCell();
+            }
+        }
+        return world;
+    }
 
 }
