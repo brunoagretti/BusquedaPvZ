@@ -26,9 +26,9 @@ public class PvzEnvironmentState extends EnvironmentState {
 		// TODO Auto-generated method stub
 		//Aca no iria la logica de los soles y demas, aca solo debemos inicializar
 		
-		chomperEnergy=5; //TODO randomize
-		chomperPositionX = 1; 
-		chomperPositionY = 1;
+		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); 
+		chomperPositionX = 0; 
+		chomperPositionY = RandomHandler.nextInt(RandomType.AgentPosition);
 		
 		world[chomperPositionY][chomperPositionX].setContainsAgent(true);
 	}
@@ -96,6 +96,30 @@ public class PvzEnvironmentState extends EnvironmentState {
             }
         }
     }
+
+	public void updatePosition(Position oldPos, Position newPos) {
+		CellContent contentToMove = world[oldPos.getX()][oldPos.getY()];
+		world[oldPos.getX()][oldPos.getY()] = new EmptyCell();
+		world[newPos.getX()][newPos.getY()] = contentToMove;
+	}
+
+	public boolean zombieOnPosition(Position pos) {
+		if (world[pos.getX()][pos.getY()] instanceof ZombieEntity)
+			return true;
+		else
+			return false;
+	}
+
+	public Integer getZombiesOnLastCol() {
+		Integer amount = 0;
+		for(int i=0; i<PvzEnvironment.MAP_SIZE_Y; i++){
+			if(world[i][PvzEnvironment.MAP_SIZE_X-1] instanceof ZombieEntity)
+				amount++;
+		}
+		
+		return amount;
+	}
+	
 	
 
 }

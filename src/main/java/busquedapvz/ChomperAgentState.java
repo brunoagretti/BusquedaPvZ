@@ -4,6 +4,17 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.state.AgentState;
 
 public class ChomperAgentState extends AgentState {
+	CellContent[][] environmentSensor;
+	Integer energy;
+	Integer zombiesAmountOnMap;
+	Position position;
+	
+	
+	
+	
+	public Integer getZombiesAmountOnMap() {
+		return zombiesAmountOnMap;
+	}
 
 	@Override
 	public void updateState(Perception p) {

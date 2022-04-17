@@ -12,10 +12,10 @@ public class Main {
    
     CellContent[][] world = {
     		{new SunflowerEntity(),new SunflowerEntity(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
-			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieEntity(1),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
+			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieEntity(2, new Position(4,1)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
 			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
-			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieEntity(3),new EmptyCell(),new EmptyCell()},
-			{new EmptyCell(),new EmptyCell(),new ZombieEntity(2),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()}
+			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieEntity(5, new Position(6,3)),new EmptyCell(),new EmptyCell()},
+			{new EmptyCell(),new EmptyCell(),new ZombieEntity(1, new Position(2,4)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()}
 	};
     PvzEnvironmentState state = new PvzEnvironmentState(world);
     PvzEnvironment enviroment = new PvzEnvironment();

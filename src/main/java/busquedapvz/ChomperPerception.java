@@ -9,6 +9,7 @@ public class ChomperPerception extends Perception{
 
 	CellContent[][] environmentSensor;
 	Integer chomperEnergy;
+	Integer zombieAmountOnMap;
 	
 	public ChomperPerception() {
 		chomperEnergy = 10; //TODO: add randomness
@@ -18,6 +19,10 @@ public class ChomperPerception extends Perception{
 		super(agent, environment);
 	}
 	
+	public Integer getZombieAmountOnMap() {
+		return zombieAmountOnMap;
+	}
+
 	@Override
 	public void initPerception(Agent agent, Environment environment) {
 		// TODO Auto-generated method stub
@@ -33,6 +38,8 @@ public class ChomperPerception extends Perception{
 		
 		CellContent[][] actualEnvironmentState = environmentState.getWorld();
 		
+		zombieAmountOnMap = ((PvzEnvironment) environment).getZombiesOnMap().size();
+				
 		for(Integer i=chomperPositionX;i< PvzEnvironment.MAP_SIZE_X;i++) {
 			
 			environmentSensor[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
@@ -67,7 +74,7 @@ public class ChomperPerception extends Perception{
 		}
 		
 		environmentSensor[chomperPositionY][chomperPositionX].setContainsAgent(true);
-	
+		
 	}
 	
     @Override
