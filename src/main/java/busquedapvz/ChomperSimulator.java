@@ -112,7 +112,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		}
 		
 		
-		environment.getEnvironmentState().subZombies(amountToAdd);
+		environment.getEnvironmentState().decrementZombiesAmount(amountToAdd);
 		
 		
 		 return amountToAdd;

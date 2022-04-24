@@ -1,34 +1,42 @@
 package busquedapvz.actions;
 
+import busquedapvz.ChomperAgentState;
+import busquedapvz.Position;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
 import frsf.cidisi.faia.state.EnvironmentState;
 
-public class AttackLeft extends SearchAction{
+public class AttackLeft extends SearchAction implements AttackAction{
 
-	@Override
-	public SearchBasedAgentState execute(SearchBasedAgentState s) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  @Override
+  public SearchBasedAgentState execute(SearchBasedAgentState s) {
+    ChomperAgentState chomperState = ((ChomperAgentState) s);
 
-	@Override
-	public Double getCost() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    Position chomperPos = chomperState.getPosition();
+    Position posToAttack = new Position(chomperPos.getX()-1, chomperPos.getY());
 
-	@Override
-	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    return attack(s, posToAttack);
+  }
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  @Override
+  public Double getCost() {
+      return null;
+  }
+
+  @Override
+  public EnvironmentState execute(AgentState ast, EnvironmentState est) {
+    ChomperAgentState chomperState = ((ChomperAgentState) ast);
+
+    Position chomperPos = chomperState.getPosition();
+    Position posToAttack = new Position(chomperPos.getX(), chomperPos.getY() + 1);
+
+    return attack(ast, est, posToAttack);
+  }
+
+  @Override
+  public String toString() {
+      return "Action: Attack Left";
+  }
 
 }

@@ -1,5 +1,10 @@
 package busquedapvz;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ZombieCell extends Cell{
   
 	Integer hp;
@@ -21,16 +26,5 @@ public class ZombieCell extends Cell{
 		
 		return str.toString();
 	}
-	
-	public Integer getWalkChance() {
-		return walkChance;
-	}
-	
-	public void setWalkChance(Integer walkChance) {
-		this.walkChance = walkChance;
-	}
-	
-	
 
-	
 }

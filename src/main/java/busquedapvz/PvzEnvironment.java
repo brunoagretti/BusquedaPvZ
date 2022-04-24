@@ -2,15 +2,17 @@ package busquedapvz;
 
 import java.util.ArrayList;
 import frsf.cidisi.faia.agent.Action;
-import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 import frsf.cidisi.faia.state.AgentState;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PvzEnvironment extends Environment {
 	
-	static final Integer MAP_SIZE_X = 9;
-	static final Integer MAP_SIZE_Y = 5;
+	public static final Integer MAP_SIZE_X = 9;
+	public static final Integer MAP_SIZE_Y = 5;
 	ArrayList<ZombieCell> zombiesOnMap;
 
 	

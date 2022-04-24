@@ -4,7 +4,6 @@ import frsf.cidisi.faia.state.EnvironmentState;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
@@ -119,10 +118,14 @@ public class PvzEnvironmentState extends EnvironmentState {
 		return amount;
 	}
 
-	public void subZombies(Integer amount) {
+	public void decrementZombiesAmount(Integer amount) {
 		zombiesAmount -= amount;
 	}
-	
+
+    public void decrementChomperEnergy(Integer amount) {
+      this.chomperEnergy -= amount;
+    }
+
 	
 
 }

@@ -8,7 +8,7 @@ public class Main {
     
 //    String[][] salutation = { {"Mr. ", "Mrs. ", "Ms. "}, {"Kumar"} };
 
-   ChomperAgent agent = new ChomperAgent();
+//   ChomperAgent agent = new ChomperAgent(null);
    
     Cell[][] world = {
     		{new SunflowerCell(),new SunflowerCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
@@ -22,7 +22,7 @@ public class Main {
     enviroment.setEnvironmentState(state);
     System.out.println(state.toString());
     
-    System.out.println(new ChomperPerception(agent, enviroment));
+//    System.out.println(new ChomperPerception(agent, enviroment));
     
   }
 

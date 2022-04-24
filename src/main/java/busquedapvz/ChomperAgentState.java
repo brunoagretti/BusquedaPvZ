@@ -109,4 +109,13 @@ public class ChomperAgentState extends SearchBasedAgentState {
         	return false;
     }
 
+    public void decrementEnergy(Integer amount) {
+      this.energy -= amount;
+    }
+
+    public void decrementZombiesAmount(Integer amount) {
+      zombiesAmount -= amount;
+    }
+
+
 }
