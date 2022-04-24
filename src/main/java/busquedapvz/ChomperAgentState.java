@@ -32,7 +32,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		position = per.getChomperPosition();
 
 		per.getSensedCells().forEach((Position pos, Cell cell) -> {
-			knownWorld[pos.getY()][pos.getX()] = cell;
+			knownWorld[pos.getX()][pos.getY()] = cell;
 		});
 
 	}
@@ -42,13 +42,12 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		StringBuffer str = new StringBuffer();
 
 		str.append("===========================================\n");
-		str.append("Agent State: \n");
 		str.append("Agent Energy = " + energy + "\n");
 		str.append("Zombies left = " + zombiesAmount + "\n");
 		str.append("Agent Position = (" + position.getX() + ", " + position.getY() + ")\n");
-		str.append("Agent Map = (" + position.getX() + ", " + position.getY() + ")\n");
-		for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_Y; i++) {
-			for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_X; j++) {
+		str.append("Agent Map: \n");
+		for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+			for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
 				if (knownWorld[i][j].containsAgent()) {
 					str.append("@");
 					str.append(knownWorld[i][j].toString());
@@ -70,9 +69,17 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	@Override
 	public void initState() {
 		// SET KNOWN WORLD TO UNKNOWN
-		Arrays.fill(knownWorld, new UnknownCell());
+
+      knownWorld = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+      for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+        for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+          knownWorld[i][j] = new UnknownCell(new Position(i, j), false);
+        }
+      }
+	  
 		energy = RandomHandler.nextInt(RandomType.StartingAgentEnergy);
 		position = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));
+		knownWorld[0][position.getY()].setContainsAgent(true);
 	}
 
 	@Override

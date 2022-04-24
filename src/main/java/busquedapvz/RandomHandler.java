@@ -46,8 +46,7 @@ public class RandomHandler {
 			
 			
 		default:
-			System.out.println("WRONG PARAMETER - ");
-			
+			System.out.println("WRONG PARAMETER: " + type);
 		}
 		
 		

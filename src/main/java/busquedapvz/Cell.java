@@ -44,14 +44,17 @@ public class Cell implements Cloneable{
     	
     }
     
-    
-    
     @Override
     public Cell clone() {
-    	return new Cell(new Position(position.getX(), position.getY()), Boolean.valueOf(this.containsAgent));
-    	
+        try {
+          Cell clone = (Cell) super.clone();
+          clone.setPosition(new Position(this.position.getX(), this.getPosition().getY()));
+          clone.setContainsAgent(Boolean.valueOf(this.containsAgent));
+          return clone;
+        } catch (CloneNotSupportedException e) {
+          e.printStackTrace();
+        }
+        return null;
     }
-    
-    
 
 }

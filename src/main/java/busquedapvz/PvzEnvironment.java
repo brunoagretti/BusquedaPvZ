@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
-import frsf.cidisi.faia.state.AgentState;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -40,41 +39,41 @@ public class PvzEnvironment extends Environment {
       for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
 
         ret.sensedCells.put(new Position(i, chomperPositionY),
-            actualEnvironmentState[chomperPositionY][i].clone());
+            actualEnvironmentState[i][chomperPositionY].clone());
 
-        if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
+        if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell)) {
           break;
         }
       }
       for (Integer i = chomperPositionX; i >= 0; i--) {
 
         ret.sensedCells.put(new Position(i, chomperPositionY),
-            actualEnvironmentState[chomperPositionY][i].clone());
+            actualEnvironmentState[i][chomperPositionY].clone());
 
-        if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
+        if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell)) {
           break;
         }
       }
       for (Integer j = chomperPositionY; j < PvzEnvironment.MAP_SIZE_Y; j++) {
 
         ret.sensedCells.put(new Position(chomperPositionX, j),
-            actualEnvironmentState[j][chomperPositionX].clone());
+            actualEnvironmentState[chomperPositionX][j].clone());
 
 
-        if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
+        if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell)) {
           break;
         }
       }
       for (Integer j = chomperPositionY; j >= 0; j--) {
 
         ret.sensedCells.put(new Position(chomperPositionX, j),
-            actualEnvironmentState[j][chomperPositionX].clone());
+            actualEnvironmentState[chomperPositionX][j].clone());
 
-        if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
+        if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell)) {
           break;
         }
       }
-      ret.sensedCells.get(new Position(chomperPositionX,chomperPositionY)).setContainsAgent(true);   
+      ret.sensedCells.get(ret.chomperPosition).setContainsAgent(true);   
       
 		return ret;
 	}
@@ -84,18 +83,11 @@ public class PvzEnvironment extends Environment {
 		return (PvzEnvironmentState) super.getEnvironmentState();
 	}
 	
-	@Override
-	public void updateState(AgentState ast, Action action) {
-		super.updateState(ast, action);
-		
-		
-	}
-	
 	public void generateSuns() {
 		Cell[][] world = ((PvzEnvironmentState) this.environmentState).getWorld();
 		
-        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
-        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
+        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_X;i++) {
+        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_Y;j++) {
         		if(world[i][j] instanceof SunflowerCell) {
         			((SunflowerCell) world[i][j]).addSuns(RandomHandler.nextInt(RandomType.SunSpawns));
         		}
@@ -155,16 +147,6 @@ public class PvzEnvironment extends Environment {
 	public ArrayList<ZombieCell> getZombiesOnMap() {
 		return zombiesOnMap;
 	}
-	
-    private Cell[][] createMap() {
-      Cell[][] world = new Cell[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
-      for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_Y; i++) {
-        for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_X; j++) {
-          world[i][j] = new UnknownCell();
-        }
-      }
-      return world;
-    }
 
     @Override
     public boolean agentFailed(Action actionReturned) {
