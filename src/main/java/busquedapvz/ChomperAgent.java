@@ -23,7 +23,6 @@ import frsf.cidisi.faia.solver.search.Search;
 
 
 public class ChomperAgent extends SearchBasedAgent {
-
 	
 	public ChomperAgent(Integer zombiesAmount) {
 		// The Chomper Goal

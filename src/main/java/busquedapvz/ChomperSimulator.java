@@ -44,7 +44,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
         GoalBasedAgent agent;
 
         agent = (ChomperAgent) this.getAgents().firstElement();
-        environment.getEnvironmentState().setZombiesAmount(RandomHandler.nextInt(RandomType.ZombieAmount));
+
         System.out.println("The generated amount of zombies in the simulation is: " + environment.getEnvironmentState().getZombiesAmount()); 
        
 
@@ -81,7 +81,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             this.actionReturned(agent, action);
 
-        } while (!this.agentSucceeded(action) && !this.agentFailed(action) && environment.getEnvironmentState().getZombiesAmount()>0);
+        } while (!this.agentSucceeded(action) && !this.agentFailed(action));
 
         // Check what happened, if agent has reached the goal or not.
         if (this.agentSucceeded(action)) {

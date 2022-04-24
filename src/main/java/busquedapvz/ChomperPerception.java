@@ -1,6 +1,5 @@
 package busquedapvz;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import frsf.cidisi.faia.agent.Agent;
@@ -8,8 +7,6 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 import lombok.Getter;
 import lombok.Setter;
-
-
 
 @Getter
 @Setter
@@ -48,37 +45,37 @@ public class ChomperPerception extends Perception{
         for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
 
           sensedCells.put(new Position(i, chomperPositionY),
-              actualEnvironmentState[chomperPositionY][i]);
+              actualEnvironmentState[i][chomperPositionY]);
 
-          if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
+          if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell)) {
             break;
           }
         }
         for (Integer i = chomperPositionX; i >= 0; i--) {
 
           sensedCells.put(new Position(i, chomperPositionY),
-              actualEnvironmentState[chomperPositionY][i]);
+              actualEnvironmentState[i][chomperPositionY]);
 
-          if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
+          if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell)) {
             break;
           }
         }
         for (Integer j = chomperPositionY; j < PvzEnvironment.MAP_SIZE_Y; j++) {
 
           sensedCells.put(new Position(chomperPositionX, j),
-              actualEnvironmentState[j][chomperPositionX]);
+              actualEnvironmentState[chomperPositionX][j]);
 
 
-          if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
+          if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell)) {
             break;
           }
         }
         for (Integer j = chomperPositionY; j >= 0; j--) {
 
           sensedCells.put(new Position(chomperPositionX, j),
-              actualEnvironmentState[j][chomperPositionX]);
+              actualEnvironmentState[chomperPositionX][j]);
 
-          if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
+          if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell)) {
             break;
           }
         }

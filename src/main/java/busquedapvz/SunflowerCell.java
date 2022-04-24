@@ -2,10 +2,12 @@ package busquedapvz;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
-public class SunflowerCell extends Cell implements Cloneable{
+public class SunflowerCell extends Cell{
 	
 	Integer sunQuantity;
 	
@@ -35,13 +37,13 @@ public class SunflowerCell extends Cell implements Cloneable{
 	
 	public void takeSuns() {
 		this.sunQuantity = 0;
-	}
-	
-	
-	 @Override
-	 public SunflowerCell clone() {
-	    	return new SunflowerCell(new Position(position.getX(), position.getY()), Boolean.valueOf(containsAgent), Integer.valueOf(sunQuantity));
-	    	
-	 }
-	
-}
+      }
+
+      @Override
+      public SunflowerCell clone() {
+        SunflowerCell clone = (SunflowerCell) super.clone();
+        clone.setSunQuantity(Integer.valueOf(this.sunQuantity));
+        return clone;
+      }
+
+    }

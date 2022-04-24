@@ -1,5 +1,6 @@
 package busquedapvz;
 
+import java.util.Arrays;
 import frsf.cidisi.faia.state.EnvironmentState;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,17 +35,18 @@ public class PvzEnvironmentState extends EnvironmentState {
 	public void initState() {
 		
 		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); 
-		chomperPosition = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));
+		zombiesAmount = RandomHandler.nextInt(RandomType.ZombieAmount);
 		
-		world[chomperPosition.getY()][chomperPosition.getX()].setContainsAgent(true);
+		chomperPosition = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));
+		world[0][chomperPosition.getY()].setContainsAgent(true);
 	}
 
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
 
-        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
-        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
+        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_X;i++) {
+        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_Y;j++) {
         		if(world[i][j].containsAgent()) {
         			str.append("@");
         			str.append(world[i][j].toString());
@@ -87,12 +89,12 @@ public class PvzEnvironmentState extends EnvironmentState {
 	}
 	
     private void initWorld(){
-    	world = new Cell[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
-        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
-        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
-        		world[i][j] = new EmptyCell();
-            }
+      world = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+      for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+        for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+          world[i][j] = new EmptyCell(new Position(i,j),false);
         }
+      }
     }
 
 	public void updatePosition(Position oldPos, Position newPos) {
@@ -110,8 +112,8 @@ public class PvzEnvironmentState extends EnvironmentState {
 
 	public Integer getZombiesOnLastCol() {
 		Integer amount = 0;
-		for(int i=0; i<PvzEnvironment.MAP_SIZE_Y; i++){
-			if(world[i][PvzEnvironment.MAP_SIZE_X-1] instanceof ZombieCell)
+		for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++){
+			if(world[PvzEnvironment.MAP_SIZE_X-1][j] instanceof ZombieCell)
 				amount++;
 		}
 		

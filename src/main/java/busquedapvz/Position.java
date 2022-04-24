@@ -37,4 +37,9 @@ public class Position {
       }
       return isEquals;
     }
+    
+    @Override
+    public int hashCode() {
+      return x.hashCode()*7 + y.hashCode();
+    }
   }
