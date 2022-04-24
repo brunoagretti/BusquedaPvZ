@@ -1,12 +1,24 @@
 package busquedapvz;
 
 import frsf.cidisi.faia.state.EnvironmentState;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@Setter
+@AllArgsConstructor
 public class PvzEnvironmentState extends EnvironmentState {
 	
-	private Cell world[][];
-	private Position chomperPosition;
-	private Integer chomperEnergy;
+	 Cell world[][];
+	 Position chomperPosition;
+	 Integer chomperEnergy;
+	
+	Boolean agentFailed = false;
 	
 	public PvzEnvironmentState(Cell[][] world) {
         this.world = world;
@@ -20,8 +32,6 @@ public class PvzEnvironmentState extends EnvironmentState {
    
 	@Override
 	public void initState() {
-		// TODO Auto-generated method stub
-		//Aca no iria la logica de los soles y demas, aca solo debemos inicializar
 		
 		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); 
 		chomperPosition = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));

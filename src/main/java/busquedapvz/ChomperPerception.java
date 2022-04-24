@@ -1,23 +1,25 @@
 package busquedapvz;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
 public class ChomperPerception extends Perception{
-	
-	
-	ArrayList<Sensor> sensedCells;
+
+	Map<Position, Cell> sensedCells;
 	Integer chomperEnergy;
 	Integer zombieAmountOnMap;
 	
 	public ChomperPerception() {
+	  sensedCells = new HashMap<Position, Cell>();
 	}
 	
 	public ChomperPerception(Agent agent, Environment environment) {
 		super(agent, environment);
+		sensedCells = new HashMap<Position, Cell>();
 	}
 	
 	public Integer getZombieAmountOnMap() {
@@ -26,8 +28,6 @@ public class ChomperPerception extends Perception{
 
 	@Override
 	public void initPerception(Agent agent, Environment environment) {
-		// TODO Auto-generated method stub
-//		ChomperAgent chomperAgent = (ChomperAgent) agent;
 		initSensor();
 		
 		PvzEnvironment pvzEnvironment = (PvzEnvironment) environment;
@@ -40,88 +40,65 @@ public class ChomperPerception extends Perception{
 		Cell[][] actualEnvironmentState = environmentState.getWorld();
 		
 		zombieAmountOnMap = ((PvzEnvironment) environment).getZombiesOnMap().size();
-				
-		for(Integer i=chomperPositionX;i< PvzEnvironment.MAP_SIZE_X;i++) {
-			
-			;
-			Sensor sensedCell = new Sensor()
-			perceptedWorld[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
-			
-			if(!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) { 
-				break;
-			}
-		}
-		for(Integer i=chomperPositionX;i>=0;i--) {
-			
-			perceptedWorld[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
-			
-			if(!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) { 
-				break;
-			}
-		}
-		for(Integer j=chomperPositionY;j< PvzEnvironment.MAP_SIZE_Y;j++) {
-			
-			perceptedWorld[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
-			
-			if(!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) { 
-				break;
-			}
-		}
-		for(Integer j=chomperPositionY;j>=0;j--) {
-			
-			perceptedWorld[j][chomperPositionX]=actualEnvironmentState[j][chomperPositionX];
-			
-			if(!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) { 
-				break;
-			}
-		}
-		
-		perceptedWorld[chomperPositionY][chomperPositionX].setContainsAgent(true);
-		
-	}
-	
+
+        for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
+
+          sensedCells.put(new Position(i, chomperPositionY),
+              actualEnvironmentState[chomperPositionY][i]);
+
+          if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
+            break;
+          }
+        }
+        for (Integer i = chomperPositionX; i >= 0; i--) {
+
+          sensedCells.put(new Position(i, chomperPositionY),
+              actualEnvironmentState[chomperPositionY][i]);
+
+          if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
+            break;
+          }
+        }
+        for (Integer j = chomperPositionY; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+
+          sensedCells.put(new Position(chomperPositionX, j),
+              actualEnvironmentState[j][chomperPositionX]);
+
+
+          if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
+            break;
+          }
+        }
+        for (Integer j = chomperPositionY; j >= 0; j--) {
+
+          sensedCells.put(new Position(chomperPositionX, j),
+              actualEnvironmentState[j][chomperPositionX]);
+
+          if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
+            break;
+          }
+        }
+        sensedCells.get(new Position(chomperPositionX,chomperPositionY)).setContainsAgent(true);
+      }
+
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
 
-        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
-        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
-        		
-        		if(perceptedWorld[i][j].containsAgent()) {
-        			str.append("@");
-        			str.append(perceptedWorld[i][j].toString());
-        			
-        		}else {
-        			str.append(" ");
-        			str.append(perceptedWorld[i][j].toString());
-        			
-        		}
-            	str.append(" ");
-            }
-        	str.append("\n");
-        }
+        sensedCells.forEach((Position pos,Cell cell)->{
+          str.append("Sensed cell at ("+pos.getX() + ", " + pos.getY() + "): ");
+          str.append(cell + "\n");
+        });
 
         return str.toString();
     }
     
     private void initSensor(){
-    	perceptedWorld = new Cell[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
-        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
-        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
-        		perceptedWorld[i][j] = new UnknownCell();
-            }
-        }
+    	sensedCells = new HashMap<Position, Cell>();
     }
 
 	public void setZombieAmountOnMap(Integer zombieAmountOnMap) {
 		this.zombieAmountOnMap = zombieAmountOnMap;
 	}
 
-	public Cell[][] getPerceptedWorld() {
-		return perceptedWorld;
-	}
-
-	public void setPerceptedWorld(Cell[][] perceptedWorld) {
-		this.perceptedWorld = perceptedWorld;
-	}
 }

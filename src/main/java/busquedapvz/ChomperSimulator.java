@@ -116,5 +116,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		 return amountToAdd;
 		
 	}
+	
+    @Override
+    public boolean agentFailed(Action actionReturned) {
+        return this.environment.agentFailed(actionReturned);
+    }
 
 }
