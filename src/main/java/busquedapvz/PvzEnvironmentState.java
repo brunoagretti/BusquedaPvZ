@@ -125,6 +125,10 @@ public class PvzEnvironmentState extends EnvironmentState {
     public void decrementChomperEnergy(Integer amount) {
       this.chomperEnergy -= amount;
     }
+    
+    public void addChomperEnergy(Integer amount) {
+        this.chomperEnergy += amount;
+    }
 
 	
 

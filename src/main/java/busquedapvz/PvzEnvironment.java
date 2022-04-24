@@ -40,7 +40,7 @@ public class PvzEnvironment extends Environment {
       for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
 
         ret.sensedCells.put(new Position(i, chomperPositionY),
-            actualEnvironmentState[chomperPositionY][i]);
+            actualEnvironmentState[chomperPositionY][i].clone());
 
         if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
           break;
@@ -49,7 +49,7 @@ public class PvzEnvironment extends Environment {
       for (Integer i = chomperPositionX; i >= 0; i--) {
 
         ret.sensedCells.put(new Position(i, chomperPositionY),
-            actualEnvironmentState[chomperPositionY][i]);
+            actualEnvironmentState[chomperPositionY][i].clone());
 
         if (!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) {
           break;
@@ -58,7 +58,7 @@ public class PvzEnvironment extends Environment {
       for (Integer j = chomperPositionY; j < PvzEnvironment.MAP_SIZE_Y; j++) {
 
         ret.sensedCells.put(new Position(chomperPositionX, j),
-            actualEnvironmentState[j][chomperPositionX]);
+            actualEnvironmentState[j][chomperPositionX].clone());
 
 
         if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
@@ -68,7 +68,7 @@ public class PvzEnvironment extends Environment {
       for (Integer j = chomperPositionY; j >= 0; j--) {
 
         ret.sensedCells.put(new Position(chomperPositionX, j),
-            actualEnvironmentState[j][chomperPositionX]);
+            actualEnvironmentState[j][chomperPositionX].clone());
 
         if (!(actualEnvironmentState[j][chomperPositionX] instanceof EmptyCell)) {
           break;
@@ -131,12 +131,14 @@ public class PvzEnvironment extends Environment {
 				newPos.decrementX();
 				if(newPos.getX() < 0) {
 				  getEnvironmentState().setAgentFailed(true);
+				  getEnvironmentState().getWorld()[zombie.getPosition().getX()][zombie.getPosition().getY()] = new EmptyCell();
 				}
-				
-				if (!((PvzEnvironmentState) this.environmentState).zombieOnPosition(newPos)) {
-					moveZombie(zombie.getPosition(), newPos);
-					zombie.setWalkChance(34);
-				} 
+				else {
+					if (!((PvzEnvironmentState) this.environmentState).zombieOnPosition(newPos)) {
+						moveZombie(zombie.getPosition(), newPos);
+						zombie.setWalkChance(34);
+					} 
+				}
 		    }
 		    
 		    else {

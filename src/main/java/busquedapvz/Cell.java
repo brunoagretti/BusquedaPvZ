@@ -1,6 +1,9 @@
 package busquedapvz;
 
-public class Cell {
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class Cell implements Cloneable{
 
     Position position;
 
@@ -42,6 +45,12 @@ public class Cell {
     }
     
     
+    
+    @Override
+    public Cell clone() {
+    	return new Cell(new Position(position.getX(), position.getY()), Boolean.valueOf(this.containsAgent));
+    	
+    }
     
     
 

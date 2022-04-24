@@ -1,5 +1,10 @@
 package busquedapvz.actions;
 
+import busquedapvz.Cell;
+import busquedapvz.ChomperAgentState;
+import busquedapvz.EmptyCell;
+import busquedapvz.PvzEnvironmentState;
+import busquedapvz.SunflowerCell;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
@@ -9,26 +14,48 @@ public class PlantSunflower extends SearchAction{
 
 	@Override
 	public SearchBasedAgentState execute(SearchBasedAgentState s) {
-		// TODO Auto-generated method stub
+		ChomperAgentState chomperState = (ChomperAgentState) s;
+		
+		Cell cellToPlant = chomperState.getKnownWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()];
+		if(cellToPlant instanceof EmptyCell && chomperState.getEnergy()>0) {
+			cellToPlant = new SunflowerCell();
+			chomperState.decrementEnergy(1);
+			
+			return chomperState;
+		}
+			
 		return null;
 	}
 
 	@Override
 	public Double getCost() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-		// TODO Auto-generated method stub
+		ChomperAgentState chomperState = (ChomperAgentState) ast;
+		PvzEnvironmentState environmentState = (PvzEnvironmentState) est;
+		
+		Cell cellToPlant = chomperState.getKnownWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()];
+		
+		if(cellToPlant instanceof EmptyCell && chomperState.getEnergy()>0) {
+			cellToPlant = new SunflowerCell();
+			environmentState.getWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()] = new SunflowerCell();
+			chomperState.decrementEnergy(1);
+			environmentState.decrementChomperEnergy(1);
+			
+			
+			return environmentState;
+		}
+			
 		return null;
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Action: PlantSunflower";
 	}
 
 }
