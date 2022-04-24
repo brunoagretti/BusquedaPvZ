@@ -14,11 +14,11 @@ import frsf.cidisi.faia.simulator.events.SimulatorEventNotifier;
 import frsf.cidisi.faia.state.AgentState;
 
 public class ChomperSimulator extends SearchBasedAgentSimulator {
-
-	Integer zombiesAmount;
+	PvzEnvironment environment;
 	
 	public ChomperSimulator(Environment environment, Agent agent) {
 		super(environment, agent);
+		this.environment = (PvzEnvironment) environment;
 	}
 	
     @Override
@@ -44,18 +44,19 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
         GoalBasedAgent agent;
 
         agent = (ChomperAgent) this.getAgents().firstElement();
-        zombiesAmount = RandomHandler.nextInt(RandomType.ZombieAmount);
-        System.out.println("The generated amount of zombies in the simulation is: " + zombiesAmount); 
+        environment.getEnvironmentState().setZombiesAmount(RandomHandler.nextInt(RandomType.ZombieAmount));
+        System.out.println("The generated amount of zombies in the simulation is: " + environment.getEnvironmentState().getZombiesAmount()); 
+       
 
         do {
 
         	
             System.out.println("------------------------------------");
             System.out.println("Generating environment changes...");
-            ((PvzEnvironment) environment).generateSuns();
+            environment.generateSuns();
             
             // Spawns zombies with 50% chance
-            ((PvzEnvironment) environment).addZombies(generateZombiesAmmount());
+            environment.addZombies(generateZombiesAmmount());
             
             System.out.println("Sending perception to agent...");
             perception = this.getPercept();
@@ -69,7 +70,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             action = agent.selectAction();
 
             // After agent executes his action we should see if zombies Walk
-            ((PvzEnvironment) environment).walkZombies();
+            environment.walkZombies();
             
             if (action == null) {
                 break;
@@ -80,7 +81,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             this.actionReturned(agent, action);
 
-        } while (!this.agentSucceeded(action) && !this.agentFailed(action) && zombiesAmount>0);
+        } while (!this.agentSucceeded(action) && !this.agentFailed(action) && environment.getEnvironmentState().getZombiesAmount()>0);
 
         // Check what happened, if agent has reached the goal or not.
         if (this.agentSucceeded(action)) {
@@ -110,7 +111,8 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 				amountToAdd--;
 		}
 		
-		zombiesAmount =- amountToAdd;
+		
+		environment.getEnvironmentState().subZombies(amountToAdd);
 		
 		
 		 return amountToAdd;

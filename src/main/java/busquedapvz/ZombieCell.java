@@ -2,7 +2,6 @@ package busquedapvz;
 
 public class ZombieCell extends Cell{
   
-	String name;
 	Integer hp;
 	Integer walkChance;
 	
@@ -30,5 +29,8 @@ public class ZombieCell extends Cell{
 	public void setWalkChance(Integer walkChance) {
 		this.walkChance = walkChance;
 	}
+	
+	
+
 	
 }

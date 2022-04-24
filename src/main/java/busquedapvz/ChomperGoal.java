@@ -3,11 +3,11 @@ package busquedapvz;
 import frsf.cidisi.faia.agent.search.GoalTest;
 import frsf.cidisi.faia.state.AgentState;
 
-public class ChomperGoalState extends GoalTest{
+public class ChomperGoal extends GoalTest{
 
 	@Override
 	public boolean isGoalState(AgentState agentState) {
-		if(((ChomperAgentState) agentState).getZombiesAmountOnMap() == 0)
+		if(((ChomperAgentState) agentState).noZombiesLeft())
 			return true;
 		else
 			return false;

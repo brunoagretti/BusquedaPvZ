@@ -12,6 +12,7 @@ public class PvzEnvironment extends Environment {
 	static final Integer MAP_SIZE_X = 9;
 	static final Integer MAP_SIZE_Y = 5;
 	ArrayList<ZombieCell> zombiesOnMap;
+
 	
 	public PvzEnvironment() {
 		zombiesOnMap = new ArrayList<ZombieCell>();
@@ -31,9 +32,9 @@ public class PvzEnvironment extends Environment {
       
       Cell[][] actualEnvironmentState = environmentState.getWorld();
       
-      ret.zombieAmountOnMap = getZombiesOnMap().size();
+      ret.zombiesAmount = environmentState.getZombiesAmount();
       ret.chomperEnergy = getEnvironmentState().getChomperEnergy();
-
+      ret.chomperPosition = environmentState.getChomperPosition();
       for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
 
         ret.sensedCells.put(new Position(i, chomperPositionY),

@@ -17,6 +17,7 @@ public class PvzEnvironmentState extends EnvironmentState {
 	 Cell world[][];
 	 Position chomperPosition;
 	 Integer chomperEnergy;
+	 Integer zombiesAmount;
 	
 	Boolean agentFailed = false;
 	
@@ -116,6 +117,10 @@ public class PvzEnvironmentState extends EnvironmentState {
 		}
 		
 		return amount;
+	}
+
+	public void subZombies(Integer amount) {
+		zombiesAmount -= amount;
 	}
 	
 	

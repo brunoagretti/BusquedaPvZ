@@ -6,12 +6,19 @@ import java.util.Map;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
+import lombok.Getter;
+import lombok.Setter;
 
+
+
+@Getter
+@Setter
 public class ChomperPerception extends Perception{
 
 	Map<Position, Cell> sensedCells;
 	Integer chomperEnergy;
-	Integer zombieAmountOnMap;
+	Integer zombiesAmount;
+	Position chomperPosition;
 	
 	public ChomperPerception() {
 	  sensedCells = new HashMap<Position, Cell>();
@@ -22,9 +29,6 @@ public class ChomperPerception extends Perception{
 		sensedCells = new HashMap<Position, Cell>();
 	}
 	
-	public Integer getZombieAmountOnMap() {
-		return zombieAmountOnMap;
-	}
 
 	@Override
 	public void initPerception(Agent agent, Environment environment) {
@@ -39,7 +43,7 @@ public class ChomperPerception extends Perception{
 		
 		Cell[][] actualEnvironmentState = environmentState.getWorld();
 		
-		zombieAmountOnMap = ((PvzEnvironment) environment).getZombiesOnMap().size();
+		
 
         for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
 
@@ -97,8 +101,6 @@ public class ChomperPerception extends Perception{
     	sensedCells = new HashMap<Position, Cell>();
     }
 
-	public void setZombieAmountOnMap(Integer zombieAmountOnMap) {
-		this.zombieAmountOnMap = zombieAmountOnMap;
-	}
+
 
 }

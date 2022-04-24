@@ -25,5 +25,24 @@ public class Cell {
     public void setPosition(Position position) {
       this.position = position;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	boolean isEqual = false;
+    	
+    	if(obj instanceof Cell) {
+    		if(((Cell) obj).getPosition().equals(this.position) && ((Cell) obj).containsAgent() == this.containsAgent) {
+    			isEqual = true;
+    		}
+    	}
+    	
+    	
+    	return isEqual;
+    	
+    }
+    
+    
+    
+    
 
 }
