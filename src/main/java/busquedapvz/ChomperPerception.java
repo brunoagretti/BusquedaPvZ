@@ -1,13 +1,16 @@
 package busquedapvz;
 
+import java.util.ArrayList;
+
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
 public class ChomperPerception extends Perception{
 	
-
-	Cell[][] perceptedWorld;
+	
+	ArrayList<Sensor> sensedCells;
+	Integer chomperEnergy;
 	Integer zombieAmountOnMap;
 	
 	public ChomperPerception() {
@@ -40,6 +43,8 @@ public class ChomperPerception extends Perception{
 				
 		for(Integer i=chomperPositionX;i< PvzEnvironment.MAP_SIZE_X;i++) {
 			
+			;
+			Sensor sensedCell = new Sensor()
 			perceptedWorld[chomperPositionY][i]=actualEnvironmentState[chomperPositionY][i];
 			
 			if(!(actualEnvironmentState[chomperPositionY][i] instanceof EmptyCell)) { 
