@@ -1,8 +1,6 @@
 package busquedapvz;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
@@ -12,10 +10,10 @@ public class PvzEnvironment extends Environment {
 	
 	static final Integer MAP_SIZE_X = 9;
 	static final Integer MAP_SIZE_Y = 5;
-	ArrayList<ZombieEntity> zombiesOnMap;
+	ArrayList<ZombieCell> zombiesOnMap;
 	
 	public PvzEnvironment() {
-		zombiesOnMap = new ArrayList<ZombieEntity>();
+		zombiesOnMap = new ArrayList<ZombieCell>();
 		this.environmentState = new PvzEnvironmentState();
 	}
 	
@@ -24,14 +22,14 @@ public class PvzEnvironment extends Environment {
 
 		ChomperPerception newPerception = new ChomperPerception();
 		
-		Integer chomperPositionX = getEnvironmentState().getChomperPositionX();
-		Integer chomperPositionY = getEnvironmentState().getChomperPositionY();
+		Integer chomperPositionX = getEnvironmentState().getChomperPosition().getX();
+		Integer chomperPositionY = getEnvironmentState().getChomperPosition().getY();
 		
-		CellContent[][] world = getEnvironmentState().getWorld();
+		Cell[][] world = getEnvironmentState().getWorld();
 		
 		newPerception.setZombieAmountOnMap(getZombiesOnMap().size());
 		
-		CellContent[][] perceptedWorld = createMap();
+		Cell[][] perceptedWorld = createMap();
 				
 		for(Integer i=chomperPositionX;i< PvzEnvironment.MAP_SIZE_X;i++) {
 			
@@ -86,12 +84,12 @@ public class PvzEnvironment extends Environment {
 	}
 	
 	public void generateSuns() {
-		CellContent[][] world = ((PvzEnvironmentState) this.environmentState).getWorld();
+		Cell[][] world = ((PvzEnvironmentState) this.environmentState).getWorld();
 		
         for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
         	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
-        		if(world[i][j] instanceof SunflowerEntity) {
-        			((SunflowerEntity) world[i][j]).addSuns(RandomHandler.nextInt(RandomType.SunSpawns));
+        		if(world[i][j] instanceof SunflowerCell) {
+        			((SunflowerCell) world[i][j]).addSuns(RandomHandler.nextInt(RandomType.SunSpawns));
         		}
             }
         }
@@ -102,8 +100,8 @@ public class PvzEnvironment extends Environment {
 		while (remainingZombies > 0) {
 			Integer posY = RandomHandler.nextInt(RandomType.ZombiePosition);
 
-			if (!(this.getEnvironmentState().getWorld()[MAP_SIZE_X - 1][posY] instanceof ZombieEntity)) {
-				ZombieEntity zombieToAdd = new ZombieEntity(RandomHandler.nextInt(RandomType.ZombieHp),
+			if (!(this.getEnvironmentState().getWorld()[MAP_SIZE_X - 1][posY] instanceof ZombieCell)) {
+				ZombieCell zombieToAdd = new ZombieCell(RandomHandler.nextInt(RandomType.ZombieHp),
 						new Position(MAP_SIZE_X - 1, posY));
 				this.getEnvironmentState().getWorld()[MAP_SIZE_X - 1][posY] = zombieToAdd;
 				remainingZombies--;
@@ -112,11 +110,11 @@ public class PvzEnvironment extends Environment {
 		}
 	}
 	
-	// makes the (UNDEAD) zombies walk 1 step.
+	// Fires the chance of zombies walking 1 step.
 	public void walkZombies() {
 		//Check for each zombie on list
 		Integer n;
-		for(ZombieEntity zombie:zombiesOnMap) {
+		for(ZombieCell zombie:zombiesOnMap) {
 			n = RandomHandler.nextInt(RandomType.ZombieWalk);
 			
 			// If there is a plant on the new position of the zombie it will be deleted with all its suns
@@ -143,12 +141,12 @@ public class PvzEnvironment extends Environment {
 		((PvzEnvironmentState) this.environmentState).updatePosition(oldPos, newPos);
 	}
 
-	public ArrayList<ZombieEntity> getZombiesOnMap() {
+	public ArrayList<ZombieCell> getZombiesOnMap() {
 		return zombiesOnMap;
 	}
 	
-    private CellContent[][] createMap(){
-    	CellContent[][] world = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
+    private Cell[][] createMap(){
+    	Cell[][] world = new Cell[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
         for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
         	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
         		world[i][j] = new UnknownCell();

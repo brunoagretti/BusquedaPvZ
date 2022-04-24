@@ -7,7 +7,7 @@ import frsf.cidisi.faia.environment.Environment;
 public class ChomperPerception extends Perception{
 	
 
-	CellContent[][] perceptedWorld;
+	Cell[][] perceptedWorld;
 	Integer zombieAmountOnMap;
 	
 	public ChomperPerception() {
@@ -31,10 +31,10 @@ public class ChomperPerception extends Perception{
 		PvzEnvironmentState environmentState =
 				pvzEnvironment.getEnvironmentState();
 		
-		Integer chomperPositionX = environmentState.getChomperPositionX();
-		Integer chomperPositionY = environmentState.getChomperPositionY();
+		Integer chomperPositionX = environmentState.getChomperPosition().getX();
+		Integer chomperPositionY = environmentState.getChomperPosition().getY();
 		
-		CellContent[][] actualEnvironmentState = environmentState.getWorld();
+		Cell[][] actualEnvironmentState = environmentState.getWorld();
 		
 		zombieAmountOnMap = ((PvzEnvironment) environment).getZombiesOnMap().size();
 				
@@ -100,7 +100,7 @@ public class ChomperPerception extends Perception{
     }
     
     private void initSensor(){
-    	perceptedWorld = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
+    	perceptedWorld = new Cell[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
         for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
         	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
         		perceptedWorld[i][j] = new UnknownCell();
@@ -112,11 +112,11 @@ public class ChomperPerception extends Perception{
 		this.zombieAmountOnMap = zombieAmountOnMap;
 	}
 
-	public CellContent[][] getPerceptedWorld() {
+	public Cell[][] getPerceptedWorld() {
 		return perceptedWorld;
 	}
 
-	public void setPerceptedWorld(CellContent[][] perceptedWorld) {
+	public void setPerceptedWorld(Cell[][] perceptedWorld) {
 		this.perceptedWorld = perceptedWorld;
 	}
 }

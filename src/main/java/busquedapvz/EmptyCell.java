@@ -1,8 +1,6 @@
 package busquedapvz;
 
-public class EmptyCell extends CellContent{
-	
-	
+public class EmptyCell extends Cell{
 	
 	@Override
 	public String toString() {

@@ -1,6 +1,6 @@
 package busquedapvz;
 
-public class UnknownCell extends CellContent{
+public class UnknownCell extends Cell{
 
 	@Override
 	public String toString() {

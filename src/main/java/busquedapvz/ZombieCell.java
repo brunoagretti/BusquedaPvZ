@@ -1,14 +1,12 @@
 package busquedapvz;
 
-public class ZombieEntity extends CellContent{
-	
-
+public class ZombieCell extends Cell{
+  
 	String name;
 	Integer hp;
 	Integer walkChance;
-	Position position;
 	
-	public ZombieEntity(Integer hp, Position p) {
+	public ZombieCell(Integer hp, Position p) {
 		super();
 		this.hp = hp;
 		this.walkChance = 34;
@@ -32,14 +30,5 @@ public class ZombieEntity extends CellContent{
 	public void setWalkChance(Integer walkChance) {
 		this.walkChance = walkChance;
 	}
-	
-	public Position getPosition() {
-		return position;
-	}
-	
-	public void setPosition(Position position) {
-		this.position = position;
-	}
-	
 	
 }

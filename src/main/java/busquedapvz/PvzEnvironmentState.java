@@ -4,14 +4,11 @@ import frsf.cidisi.faia.state.EnvironmentState;
 
 public class PvzEnvironmentState extends EnvironmentState {
 	
-	private CellContent world[][];
-	private Integer chomperPositionX;
-	private Integer chomperPositionY;
+	private Cell world[][];
+	private Position chomperPosition;
 	private Integer chomperEnergy;
 	
-	
-	
-	public PvzEnvironmentState(CellContent[][] world) {
+	public PvzEnvironmentState(Cell[][] world) {
         this.world = world;
         this.initState();
     }
@@ -20,17 +17,16 @@ public class PvzEnvironmentState extends EnvironmentState {
         initWorld();
         this.initState();
     }
-    
+   
 	@Override
 	public void initState() {
 		// TODO Auto-generated method stub
 		//Aca no iria la logica de los soles y demas, aca solo debemos inicializar
 		
 		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); 
-		chomperPositionX = 0; 
-		chomperPositionY = RandomHandler.nextInt(RandomType.AgentPosition);
+		chomperPosition = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));
 		
-		world[chomperPositionY][chomperPositionX].setContainsAgent(true);
+		world[chomperPosition.getY()][chomperPosition.getX()].setContainsAgent(true);
 	}
 
     @Override
@@ -56,31 +52,23 @@ public class PvzEnvironmentState extends EnvironmentState {
         return str.toString();
     }
 
-	public CellContent[][] getWorld() {
+	public Cell[][] getWorld() {
 		return world;
 	}
 
-	public void setWorld(CellContent[][] world) {
+	public void setWorld(Cell[][] world) {
 		this.world = world;
 	}
+	
+	public Position getChomperPosition() {
+    return chomperPosition;
+  }
 
-	public Integer getChomperPositionX() {
-		return chomperPositionX;
-	}
+  public void setChomperPosition(Position chomperPosition) {
+    this.chomperPosition = chomperPosition;
+  }
 
-	public void setChomperPositionX(Integer chomperPositionX) {
-		this.chomperPositionX = chomperPositionX;
-	}
-
-	public Integer getChomperPositionY() {
-		return chomperPositionY;
-	}
-
-	public void setChomperPositionY(Integer chomperPositionY) {
-		this.chomperPositionY = chomperPositionY;
-	}
-
-	public Integer getChomperEnergy() {
+  public Integer getChomperEnergy() {
 		return chomperEnergy;
 	}
 
@@ -89,7 +77,7 @@ public class PvzEnvironmentState extends EnvironmentState {
 	}
 	
     private void initWorld(){
-    	world = new CellContent[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
+    	world = new Cell[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
         for(Integer i=0;i< PvzEnvironment.MAP_SIZE_Y;i++) {
         	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_X;j++) {
         		world[i][j] = new EmptyCell();
@@ -98,13 +86,13 @@ public class PvzEnvironmentState extends EnvironmentState {
     }
 
 	public void updatePosition(Position oldPos, Position newPos) {
-		CellContent contentToMove = world[oldPos.getX()][oldPos.getY()];
+		Cell contentToMove = world[oldPos.getX()][oldPos.getY()];
 		world[oldPos.getX()][oldPos.getY()] = new EmptyCell();
 		world[newPos.getX()][newPos.getY()] = contentToMove;
 	}
 
 	public boolean zombieOnPosition(Position pos) {
-		if (world[pos.getX()][pos.getY()] instanceof ZombieEntity)
+		if (world[pos.getX()][pos.getY()] instanceof ZombieCell)
 			return true;
 		else
 			return false;
@@ -113,7 +101,7 @@ public class PvzEnvironmentState extends EnvironmentState {
 	public Integer getZombiesOnLastCol() {
 		Integer amount = 0;
 		for(int i=0; i<PvzEnvironment.MAP_SIZE_Y; i++){
-			if(world[i][PvzEnvironment.MAP_SIZE_X-1] instanceof ZombieEntity)
+			if(world[i][PvzEnvironment.MAP_SIZE_X-1] instanceof ZombieCell)
 				amount++;
 		}
 		

@@ -46,12 +46,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
         agent = (ChomperAgent) this.getAgents().firstElement();
         zombiesAmount = RandomHandler.nextInt(RandomType.ZombieAmount);
         System.out.println("The generated amount of zombies in the simulation is: " + zombiesAmount); 
-        /*
-         * Simulation starts. The environment sends perceptions to the agent, and
-         * it returns actions. The loop condition evaluation is placed at the end.
-         * This works even when the agent starts with a goal state (see agentSucceeded
-         * method in the SearchBasedAgentSimulator).
-         */
+
         do {
 
         	
@@ -108,7 +103,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		Integer amountToAdd = RandomHandler.nextInt(RandomType.ZombieSpawns); 
 		Integer zombiesOnLastCol = ((PvzEnvironmentState) environment.getEnvironmentState()).getZombiesOnLastCol();
 		
-		// If zombies on last column are less than 3 we can spawn the amount with want
+		// If zombies on last column are less than 3 we can spawn up to 3
 		// If not, we need to reduce the amount to a value we can spawn
 		if(zombiesOnLastCol>=3) {
 			while(zombiesOnLastCol + amountToAdd > 5)

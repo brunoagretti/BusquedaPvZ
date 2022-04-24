@@ -1,13 +1,12 @@
 package busquedapvz;
 
-public class CellContent {
-	Integer posX;
-	Integer posY;
+public class Cell {
+
+    Position position;
 
 	Boolean containsAgent;
 	
-	public CellContent() {
-		super();
+	public Cell() {
 		this.containsAgent = false;
 	}
 
@@ -19,5 +18,12 @@ public class CellContent {
 		this.containsAgent = containsAgent;
 	}
 	
-	
+    public Position getPosition() {
+      return position;
+    }
+
+    public void setPosition(Position position) {
+      this.position = position;
+    }
+
 }

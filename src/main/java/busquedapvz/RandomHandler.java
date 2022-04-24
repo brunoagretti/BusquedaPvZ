@@ -3,7 +3,6 @@ package busquedapvz;
 import java.util.Random;
 
 public class RandomHandler {
-	public static Integer walkChance = 40;
 	
 	public static Integer nextInt(RandomType type) {
 		Integer n = 0;

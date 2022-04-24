@@ -1,15 +1,15 @@
 package busquedapvz; 
 
-public class SunflowerEntity extends CellContent{
+public class SunflowerCell extends Cell{
 	
 	Integer sunQuantity;
 	
-	public SunflowerEntity(Integer sunQuantity) {
+	public SunflowerCell(Integer sunQuantity) {
 		super();
 		this.sunQuantity = sunQuantity;
 	}
 
-	public SunflowerEntity() {
+	public SunflowerCell() {
 		super();
 		this.sunQuantity = 0;
 	}

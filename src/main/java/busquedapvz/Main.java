@@ -10,12 +10,12 @@ public class Main {
 
    ChomperAgent agent = new ChomperAgent();
    
-    CellContent[][] world = {
-    		{new SunflowerEntity(),new SunflowerEntity(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
-			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieEntity(2, new Position(4,1)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
+    Cell[][] world = {
+    		{new SunflowerCell(),new SunflowerCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
+			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieCell(2, new Position(4,1)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
 			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
-			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieEntity(5, new Position(6,3)),new EmptyCell(),new EmptyCell()},
-			{new EmptyCell(),new EmptyCell(),new ZombieEntity(1, new Position(2,4)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()}
+			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieCell(5, new Position(6,3)),new EmptyCell(),new EmptyCell()},
+			{new EmptyCell(),new EmptyCell(),new ZombieCell(1, new Position(2,4)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()}
 	};
     PvzEnvironmentState state = new PvzEnvironmentState(world);
     PvzEnvironment enviroment = new PvzEnvironment();
