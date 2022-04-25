@@ -37,8 +37,7 @@ public class GoRight extends SearchAction implements MoveAction{
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Action: Go Right";
 	}
 
 }

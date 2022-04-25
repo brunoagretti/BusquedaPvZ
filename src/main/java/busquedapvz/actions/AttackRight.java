@@ -29,7 +29,7 @@ public class AttackRight extends SearchAction implements AttackAction{
     ChomperAgentState chomperState = ((ChomperAgentState) ast);
 
     Position chomperPos = chomperState.getPosition();
-    Position posToAttack = new Position(chomperPos.getX(), chomperPos.getY() + 1);
+    Position posToAttack = new Position(chomperPos.getX()+1, chomperPos.getY());
 
     return attack(ast, est, posToAttack);
   }

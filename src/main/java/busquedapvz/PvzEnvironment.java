@@ -1,6 +1,9 @@
 package busquedapvz;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
@@ -12,11 +15,11 @@ public class PvzEnvironment extends Environment {
 	
 	public static final Integer MAP_SIZE_X = 9;
 	public static final Integer MAP_SIZE_Y = 5;
-	ArrayList<ZombieCell> zombiesOnMap;
+	Set<ZombieCell> zombiesOnMap;
 
 	
 	public PvzEnvironment() {
-		zombiesOnMap = new ArrayList<ZombieCell>();
+		zombiesOnMap = new HashSet<ZombieCell>();
 		this.environmentState = new PvzEnvironmentState();
 	}
 	
@@ -104,23 +107,28 @@ public class PvzEnvironment extends Environment {
 				ZombieCell zombieToAdd = new ZombieCell(RandomHandler.nextInt(RandomType.ZombieHp),
 						new Position(MAP_SIZE_X - 1, posY));
 				this.getEnvironmentState().getWorld()[MAP_SIZE_X - 1][posY] = zombieToAdd;
+				zombiesOnMap.add(zombieToAdd);
 				remainingZombies--;
 			}
 
 		}
+		
+		
 	}
 	
+	
+
 	// Fires the chance of zombies walking 1 step.
 	public void walkZombies() {
 		//Check for each zombie on list
 		Integer n;
 		for(ZombieCell zombie:zombiesOnMap) {
 			n = RandomHandler.nextInt(RandomType.ZombieWalk);
-			
 			// If there is a plant on the new position of the zombie it will be deleted with all its suns
 		    if(n <= zombie.getWalkChance()) {
 				Position newPos = zombie.getPosition().clone();
 				newPos.decrementX();
+
 				if(newPos.getX() < 0) {
 				  getEnvironmentState().setAgentFailed(true);
 				  getEnvironmentState().getWorld()[zombie.getPosition().getX()][zombie.getPosition().getY()] = new EmptyCell();
@@ -144,13 +152,19 @@ public class PvzEnvironment extends Environment {
 		((PvzEnvironmentState) this.environmentState).updatePosition(oldPos, newPos);
 	}
 
-	public ArrayList<ZombieCell> getZombiesOnMap() {
+	public Set<ZombieCell> getZombiesOnMap() {
 		return zombiesOnMap;
 	}
 
     @Override
     public boolean agentFailed(Action actionReturned) {
-      return getEnvironmentState().getAgentFailed() && (getEnvironmentState().getChomperEnergy()>0);
+    	PvzEnvironmentState state = this.getEnvironmentState();
+      return (state.getAgentFailed() && state.getChomperEnergy()>0);
     }
-
+    
+    
+    @Override
+    public String toString() {
+    	return getEnvironmentState().toString();
+    }
   }

@@ -45,8 +45,8 @@ public class PvzEnvironmentState extends EnvironmentState {
     public String toString() {
         StringBuffer str = new StringBuffer();
 
-        for(Integer i=0;i< PvzEnvironment.MAP_SIZE_X;i++) {
-        	for(Integer j=0;j< PvzEnvironment.MAP_SIZE_Y;j++) {
+        for(Integer j=0;j< PvzEnvironment.MAP_SIZE_Y;j++) {
+        	for(Integer i=0;i< PvzEnvironment.MAP_SIZE_X;i++) {
         		if(world[i][j].containsAgent()) {
         			str.append("@");
         			str.append(world[i][j].toString());
@@ -99,7 +99,7 @@ public class PvzEnvironmentState extends EnvironmentState {
 
 	public void updatePosition(Position oldPos, Position newPos) {
 		Cell contentToMove = world[oldPos.getX()][oldPos.getY()];
-		world[oldPos.getX()][oldPos.getY()] = new EmptyCell();
+		world[oldPos.getX()][oldPos.getY()] = new EmptyCell(oldPos, false);
 		world[newPos.getX()][newPos.getY()] = contentToMove;
 	}
 

@@ -37,8 +37,7 @@ public class GoUp extends SearchAction implements MoveAction{
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Action: Go Up";
 	}
 
 }

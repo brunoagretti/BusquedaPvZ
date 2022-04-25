@@ -29,7 +29,7 @@ public class AttackUp extends SearchAction implements AttackAction{
     ChomperAgentState chomperState = ((ChomperAgentState) ast);
 
     Position chomperPos = chomperState.getPosition();
-    Position posToAttack = new Position(chomperPos.getX(), chomperPos.getY() + 1);
+    Position posToAttack = new Position(chomperPos.getX(), chomperPos.getY() - 1);
 
     return attack(ast, est, posToAttack);
   }

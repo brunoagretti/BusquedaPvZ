@@ -1,6 +1,8 @@
 package busquedapvz;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
@@ -17,7 +19,6 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	Integer zombiesAmount;
 	Position position;
 
-
 	public ChomperAgentState(Integer zombiesAmount) {
 		knownWorld = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
 		this.zombiesAmount = zombiesAmount;
@@ -26,6 +27,14 @@ public class ChomperAgentState extends SearchBasedAgentState {
 
 	@Override
 	public void updateState(Perception p) {
+		List<ZombieCell> zombiesPreviouslyDetected = new ArrayList<ZombieCell>();
+	    for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+	        for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+	           if(knownWorld[i][j] instanceof ZombieCell) {
+	        	   zombiesPreviouslyDetected.add((ZombieCell) knownWorld[i][j]);
+	           }
+	        }
+	    }
 		ChomperPerception per = (ChomperPerception) p;
 		energy = per.getChomperEnergy();
 		zombiesAmount = per.getZombiesAmount();
@@ -33,8 +42,9 @@ public class ChomperAgentState extends SearchBasedAgentState {
 
 		per.getSensedCells().forEach((Position pos, Cell cell) -> {
 			knownWorld[pos.getX()][pos.getY()] = cell;
+			
 		});
-
+		
 	}
 
 	@Override

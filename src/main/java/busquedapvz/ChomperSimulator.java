@@ -57,20 +57,22 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             
             // Spawns zombies with 50% chance
             environment.addZombies(generateZombiesAmmount());
-            
+
             System.out.println("Sending perception to agent...");
             perception = this.getPercept();
             agent.see(perception);
             System.out.println("Perception: " + perception);
 
             System.out.println("Agent State: " + agent.getAgentState());
-            System.out.println("Environment: " + environment);
+            System.out.println("Environment:\n" + environment);
+            
 
+            
             System.out.println("Asking the agent for an action...");
             action = agent.selectAction();
 
-            // After agent executes his action we should see if zombies Walk
-            environment.walkZombies();
+         
+      
             
             if (action == null) {
                 break;
@@ -80,6 +82,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println();
 
             this.actionReturned(agent, action);
+            
+            // After agent executes his action we should see if zombies Walk
+            environment.walkZombies();
+
 
         } while (!this.agentSucceeded(action) && !this.agentFailed(action));
 
