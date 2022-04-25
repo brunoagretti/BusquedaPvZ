@@ -42,13 +42,13 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		StringBuffer str = new StringBuffer();
 
 		str.append("===========================================\n");
-		str.append("Agent State: \n");
 		str.append("Agent Energy = " + energy + "\n");
 		str.append("Zombies left = " + zombiesAmount + "\n");
 		str.append("Agent Position = (" + position.getX() + ", " + position.getY() + ")\n");
 		str.append("Agent Map: \n");
-		for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
-			for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+
+		for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+			for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
 				if (knownWorld[i][j].containsAgent()) {
 					str.append("@");
 					str.append(knownWorld[i][j].toString());
@@ -71,9 +71,10 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	public void initState() {
 		// SET KNOWN WORLD TO UNKNOWN
 
-      knownWorld = new Cell[PvzEnvironment.MAP_SIZE_Y][PvzEnvironment.MAP_SIZE_X];
-      for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_Y; i++) {
-        for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_X; j++) {
+
+      knownWorld = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+      for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+        for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
           knownWorld[i][j] = new UnknownCell(new Position(i, j), false);
         }
       }
@@ -101,8 +102,12 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	@Override
 	public SearchBasedAgentState clone() {
 		
-		Cell newWorld[][] = Arrays.copyOf(knownWorld, knownWorld.length);
- 		
+		Cell newWorld[][] = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+		for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
+        	for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
+        		newWorld[i][j] = knownWorld[i][j].clone();
+            }
+        }
 		ChomperAgentState ret = new ChomperAgentState(newWorld, Integer.valueOf(energy),
 				Integer.valueOf(zombiesAmount), new Position(position.getX(), position.getY()));
 		
@@ -111,10 +116,18 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	
 	
 	public boolean noZombiesLeft() {
-        if(zombiesAmount<1)
-        	return true;
-        else
-        	return false;
+
+
+        for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
+        	for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
+            	if(knownWorld[i][j] instanceof ZombieCell) {
+            		return false;
+            	}
+            }
+        }
+        
+        
+        return true;
     }
 
     public void decrementEnergy(Integer amount) {

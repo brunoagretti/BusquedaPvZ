@@ -18,6 +18,7 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.Problem;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
+import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 
@@ -57,7 +58,7 @@ public class ChomperAgent extends SearchBasedAgent {
   @Override
   public Action selectAction() {
 	// Create the search strategy
-      DepthFirstSearch strategy = new DepthFirstSearch();
+	  BreathFirstSearch strategy = new BreathFirstSearch();
 
       /**
        * Another search strategy examples:
@@ -87,7 +88,7 @@ public class ChomperAgent extends SearchBasedAgent {
 
       /* Generate an XML file with the search tree. It can also be generated
        * in other formats like PDF with PDF_TREE */
-      searchSolver.setVisibleTree(Search.EFAIA_TREE);
+      searchSolver.setVisibleTree(Search.XML_TREE);
 
       // Set the Search searchSolver.
       this.setSolver(searchSolver);
