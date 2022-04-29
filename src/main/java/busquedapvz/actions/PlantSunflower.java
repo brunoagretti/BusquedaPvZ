@@ -18,8 +18,8 @@ public class PlantSunflower extends SearchAction{
 		
 		Cell cellToPlant = chomperState.getKnownWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()];
 		if(cellToPlant instanceof EmptyCell && chomperState.getEnergy()>0) {
-			cellToPlant = new SunflowerCell();
-			chomperState.decrementEnergy(1);
+			cellToPlant = new SunflowerCell(cellToPlant.getPosition(),true,0);
+//			chomperState.decrementEnergy(1);
 			
 			return chomperState;
 		}
@@ -40,8 +40,8 @@ public class PlantSunflower extends SearchAction{
 		Cell cellToPlant = chomperState.getKnownWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()];
 		
 		if(cellToPlant instanceof EmptyCell && chomperState.getEnergy()>0) {
-			cellToPlant = new SunflowerCell();
-			environmentState.getWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()] = new SunflowerCell();
+			cellToPlant = new SunflowerCell(cellToPlant.getPosition(),true,0);
+			environmentState.getWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()] = new SunflowerCell(cellToPlant.getPosition(),true,0);
 			chomperState.decrementEnergy(1);
 			environmentState.decrementChomperEnergy(1);
 			

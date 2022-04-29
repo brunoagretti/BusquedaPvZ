@@ -17,13 +17,6 @@ public class ZombieCell extends Cell implements Cloneable{
 		this.hp = hp;
 		this.walkChance = walkChance;
 	}
-	
-	public ZombieCell(Integer hp, Position p) {
-		super();
-		this.hp = hp;
-		this.walkChance = 34;
-		this.position = p;
-	}
 
 	@Override
 	public String toString() {
@@ -42,5 +35,9 @@ public class ZombieCell extends Cell implements Cloneable{
       clone.setWalkChance(Integer.valueOf(walkChance));
       return clone;
 	}
+    @Override
+    public boolean equals(Object obj) {
+    	return super.equals(obj) && (obj instanceof ZombieCell);
+    }
 
 }

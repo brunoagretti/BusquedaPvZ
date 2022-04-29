@@ -19,6 +19,11 @@ public class EmptyCell extends Cell{
 		return str.toString();
 	}
 	
+    @Override
+    public boolean equals(Object obj) {
+    	return super.equals(obj) && (obj instanceof EmptyCell);
+    }
+	
 	   @Override
 	    public EmptyCell clone() {
 	      EmptyCell clone = (EmptyCell) super.clone();

@@ -16,11 +16,6 @@ public class SunflowerCell extends Cell{
 		this.sunQuantity = sunQuantity;
 	}
 
-	public SunflowerCell() {
-		super();
-		this.sunQuantity = 0;
-	}
-
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
@@ -44,6 +39,11 @@ public class SunflowerCell extends Cell{
         SunflowerCell clone = (SunflowerCell) super.clone();
         clone.setSunQuantity(Integer.valueOf(this.sunQuantity));
         return clone;
+      }
+      
+      @Override
+      public boolean equals(Object obj) {
+      	return super.equals(obj) && (obj instanceof SunflowerCell);
       }
 
     }
