@@ -40,7 +40,7 @@ public interface MoveAction {
 	    	chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
 	    	cellToMove.setContainsAgent(true);
 	    	
-	    	
+	    	System.out.println("MOVER: " + posToMove);//TODO DEBUG
 	    	return chomperState;
 	    	
 	    }

@@ -94,13 +94,10 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	public boolean equals(Object obj) {
 		boolean isEqual = false;
 		if (obj instanceof ChomperAgentState) {
-			
-			
 			ChomperAgentState state = (ChomperAgentState) obj;
 			if (state.getEnergy() == this.energy && state.getZombiesAmount() == this.zombiesAmount
 				 && Arrays.deepEquals(state.getKnownWorld(), knownWorld)) {
 				isEqual = true;
-
 			}
 		}
 		return isEqual;
@@ -124,28 +121,43 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	
 	
 	public boolean allMapSunflowered() {
-		for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
-        	for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
-            	if(!(knownWorld[i][j] instanceof SunflowerCell)) {
-            		return false;
-            	}
-            }
-        }
-		
+		// for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
+		// for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
+		// if(!(knownWorld[i][j] instanceof SunflowerCell)) {
+		// return false;
+		// }
+		// }
+		// }
+		for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+			if (!(knownWorld[0][j] instanceof SunflowerCell)) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 
-    public void decrementEnergy(Integer amount) {
-      this.energy -= amount;
-    }
-    
-    public void addEnergy(Integer amount) {
-        this.energy += amount;
-    }
+	public boolean noZombiesOnMap() {
+		for (int i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+			for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+				if ((knownWorld[i][j] instanceof ZombieCell)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
-    public void decrementZombiesAmount(Integer amount) {
-      zombiesAmount -= amount;
-    }
+	public void decrementEnergy(Integer amount) {
+		this.energy -= amount;
+	}
 
+	public void addEnergy(Integer amount) {
+		this.energy += amount;
+	}
+
+	public void decrementZombiesAmount(Integer amount) {
+		zombiesAmount -= amount;
+	}
 
 }

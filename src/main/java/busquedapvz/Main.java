@@ -1,18 +1,12 @@
 package busquedapvz;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Main {
 
   public static void main(String[] args) {
    
-//    Cell[][] world = {
-//    		{new SunflowerCell(),new SunflowerCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
-//			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieCell(2, new Position(4,1)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
-//			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()},
-//			{new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new ZombieCell(5, new Position(6,3)),new EmptyCell(),new EmptyCell()},
-//			{new EmptyCell(),new EmptyCell(),new ZombieCell(1, new Position(2,4)),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell(),new EmptyCell()}
-//	};
 
     PvzEnvironment chomperEnvironment = new PvzEnvironment();
     
@@ -23,17 +17,29 @@ public class Main {
     
     simulator.start();
 
-//    HashMap<Position, Cell> sensedCells = new HashMap<Position, Cell>();
-//    sensedCells.put(new Position(1,1), new EmptyCell(new Position(1,1), true));
-//    
-//    ChomperPerception ret = new ChomperPerception();
-//    ret.setSensedCells(sensedCells);
-//    
-//    System.out.println(ret.getSensedCells());
-//    System.out.println(ret.getSensedCells().get(new Position(1,1)));
-//    
-////    System.out.println((new Position(1,1)).equals(new Position(1,1)));
+
     
+//    Cell[][] world = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+//    for(int i = 0 ; i<PvzEnvironment.MAP_SIZE_X ;i++) {
+//      for(int j = 0 ; j<PvzEnvironment.MAP_SIZE_Y ;j++) {
+//        world[i][j] = new EmptyCell(new Position(i, j), false);
+//      }
+//    }
+//    world[8][4] = new ZombieCell(new Position(8, 4), false, 1, 34);
+//    world[8][2] = new ZombieCell(new Position(8, 2), false, 1, 34);
+//    world[0][3].setContainsAgent(true);
+//    
+//    Cell[][] world2 = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+//    for(int i = 0 ; i<PvzEnvironment.MAP_SIZE_X ;i++) {
+//      for(int j = 0 ; j<PvzEnvironment.MAP_SIZE_Y ;j++) {
+//        world2[i][j] = new EmptyCell(new Position(i, j), false);
+//      }
+//    }
+//    world2[8][4] = new ZombieCell(new Position(8, 4), false, 1, 34);
+//    world2[8][2] = new ZombieCell(new Position(8, 2), false, 1, 34);
+//    world2[0][3].setContainsAgent(true);
+//    
+//    System.out.println(Arrays.deepEquals(world, world2));
   }
 
 }

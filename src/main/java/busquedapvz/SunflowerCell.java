@@ -1,12 +1,10 @@
 package busquedapvz;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class SunflowerCell extends Cell{
 	
 	Integer sunQuantity;

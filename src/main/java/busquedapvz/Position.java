@@ -42,4 +42,11 @@ public class Position {
     public int hashCode() {
       return x.hashCode()*7 + y.hashCode();
     }
+
+    @Override
+    public String toString() {
+      return "Position [x=" + x + ", y=" + y + "]";
+    }
+    
+    
   }

@@ -7,10 +7,11 @@ public class ChomperGoal extends GoalTest{
 
 	@Override
 	public boolean isGoalState(AgentState agentState) {
-		if(((ChomperAgentState) agentState).allMapSunflowered() ){
-			return true;
+		ChomperAgentState chomperState = (ChomperAgentState) agentState;
+		if(chomperState.allMapSunflowered() /*&& chomperState.noZombiesOnMap()*/){
+		  return true;
 		}else {
-			return false;
+		  return false;
 		}
 		
 	}

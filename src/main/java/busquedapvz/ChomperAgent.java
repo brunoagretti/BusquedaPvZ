@@ -57,8 +57,8 @@ public class ChomperAgent extends SearchBasedAgent {
   @Override
   public Action selectAction() {
 	// Create the search strategy
-	  BreathFirstSearch strategy = new BreathFirstSearch();
-//	  DepthFirstSearch strategy = new DepthFirstSearch();
+//	  BreathFirstSearch strategy = new BreathFirstSearch();
+	  DepthFirstSearch strategy = new DepthFirstSearch();
       /**
        * Another search strategy examples:
        * 

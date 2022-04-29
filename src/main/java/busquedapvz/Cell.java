@@ -1,17 +1,17 @@
 package busquedapvz;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public class Cell implements Cloneable{
+
+    public Cell(Position position, Boolean containsAgent) {
+    this.position = position;
+    this.containsAgent = containsAgent;
+  }
 
     Position position;
 
 	Boolean containsAgent;
+
 	
-	public Cell() {
-		this.containsAgent = false;
-	}
 
 	public Boolean containsAgent() {
 		return containsAgent;
@@ -48,7 +48,7 @@ public class Cell implements Cloneable{
     public Cell clone() {
         try {
           Cell clone = (Cell) super.clone();
-          clone.setPosition(new Position(this.position.getX(), this.getPosition().getY()));
+          clone.setPosition(new Position(Integer.valueOf(position.getX()), Integer.valueOf(position.getY())));
           clone.setContainsAgent(Boolean.valueOf(this.containsAgent));
           return clone;
         } catch (CloneNotSupportedException e) {

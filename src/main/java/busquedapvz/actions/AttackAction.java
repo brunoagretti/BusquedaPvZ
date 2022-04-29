@@ -34,9 +34,10 @@ public interface AttackAction {
     if(cellToAttack instanceof ZombieCell) {
       Integer zombieHp = ((ZombieCell) cellToAttack).getHp();
       if(zombieHp<chomperState.getEnergy()) {
-        chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell();
+        chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(posToAttack.clone(), false);
         chomperState.decrementEnergy(((ZombieCell) cellToAttack).getHp());
         chomperState.decrementZombiesAmount(1);
+        System.out.println("ATACAR: " + posToAttack);//TODO DEBUG
         return chomperState;
       }
     }
@@ -65,10 +66,10 @@ public interface AttackAction {
       Integer zombieHp = ((ZombieCell) cellToAttack).getHp();
       if(zombieHp<chomperState.getEnergy()) {
         
-        environmentState.getWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell();
+        environmentState.getWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(posToAttack.clone(), false);
         environmentState.decrementChomperEnergy(zombieHp);
         environmentState.decrementZombiesAmount(1);
-        chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell();
+        chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(posToAttack.clone(), false);
         chomperState.decrementEnergy(zombieHp);
         chomperState.decrementZombiesAmount(1);
         return environmentState;

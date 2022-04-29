@@ -1,8 +1,5 @@
 package busquedapvz;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public class UnknownCell extends Cell{
 
   public UnknownCell(Position position, Boolean containsAgent) {
