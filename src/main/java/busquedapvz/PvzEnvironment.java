@@ -36,12 +36,14 @@ public class PvzEnvironment extends Environment {
 
 		ret.zombiesAmount = environmentState.getZombiesAmount();
 		ret.chomperEnergy = getEnvironmentState().getChomperEnergy();
+		System.out.println("Energia enviada: " + ret.chomperEnergy);
+	
 		ret.chomperPosition = environmentState.getChomperPosition();
 		for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
 
 			ret.sensedCells.put(new Position(i, chomperPositionY), actualEnvironmentState[i][chomperPositionY].clone());
 
-			if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell)) {
+			if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell || actualEnvironmentState[i][chomperPositionY] instanceof SunflowerCell)) {
 				break;
 			}
 		}
@@ -49,7 +51,7 @@ public class PvzEnvironment extends Environment {
 
 			ret.sensedCells.put(new Position(i, chomperPositionY), actualEnvironmentState[i][chomperPositionY].clone());
 
-			if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell)) {
+			if (!(actualEnvironmentState[i][chomperPositionY] instanceof EmptyCell || actualEnvironmentState[i][chomperPositionY] instanceof SunflowerCell)) {
 				break;
 			}
 		}
@@ -57,7 +59,7 @@ public class PvzEnvironment extends Environment {
 
 			ret.sensedCells.put(new Position(chomperPositionX, j), actualEnvironmentState[chomperPositionX][j].clone());
 
-			if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell)) {
+			if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell || actualEnvironmentState[chomperPositionX][j] instanceof SunflowerCell)) {
 				break;
 			}
 		}
@@ -65,7 +67,7 @@ public class PvzEnvironment extends Environment {
 
 			ret.sensedCells.put(new Position(chomperPositionX, j), actualEnvironmentState[chomperPositionX][j].clone());
 
-			if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell)) {
+			if (!(actualEnvironmentState[chomperPositionX][j] instanceof EmptyCell || actualEnvironmentState[chomperPositionX][j] instanceof SunflowerCell )) {
 				break;
 			}
 		}
@@ -86,6 +88,7 @@ public class PvzEnvironment extends Environment {
 			for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
 				if (world[i][j] instanceof SunflowerCell) {
 					((SunflowerCell) world[i][j]).addSuns(RandomHandler.nextInt(RandomType.SunSpawns));
+					System.out.println("Soles:" + ((SunflowerCell) world[i][j]).getSunQuantity() );
 				}
 			}
 		}

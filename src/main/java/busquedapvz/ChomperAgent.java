@@ -36,14 +36,14 @@ public class ChomperAgent extends SearchBasedAgent {
         // Create the operators
         Vector<SearchAction> operators = new Vector<SearchAction>();
         operators.addElement(new PlantSunflower());
-        operators.addElement(new GoUp());
-        operators.addElement(new GoRight());
-        operators.addElement(new GoDown());
-        operators.addElement(new GoLeft());
         operators.addElement(new AttackDown());
         operators.addElement(new AttackUp());
         operators.addElement(new AttackLeft());
         operators.addElement(new AttackRight());
+        operators.addElement(new GoUp());
+        operators.addElement(new GoRight());
+        operators.addElement(new GoDown());
+        operators.addElement(new GoLeft());
         // Create the Problem which the Chomper will resolve
         Problem problem = new Problem(goal, ChomperState, operators);
         this.setProblem(problem);
@@ -57,8 +57,8 @@ public class ChomperAgent extends SearchBasedAgent {
   @Override
   public Action selectAction() {
 	// Create the search strategy
-//	  BreathFirstSearch strategy = new BreathFirstSearch();
-	  DepthFirstSearch strategy = new DepthFirstSearch();
+	  BreathFirstSearch strategy = new BreathFirstSearch();
+//	  DepthFirstSearch strategy = new DepthFirstSearch();
       /**
        * Another search strategy examples:
        * 

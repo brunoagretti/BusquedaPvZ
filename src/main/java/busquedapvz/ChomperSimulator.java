@@ -27,7 +27,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
         Problem p = sa.getProblem();
         GoalTest gt = p.getGoalState();
         AgentState aSt = p.getAgentState();
-
+        
         return gt.isGoalState(aSt);
     }
     
@@ -38,7 +38,6 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
         System.out.println("--- " + this.getSimulatorName() + " ---");
         System.out.println("----------------------------------------------------");
         System.out.println();
-
         Perception perception;
         Action action;
         GoalBasedAgent agent;
@@ -107,6 +106,8 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
     }
 
 	private Integer generateZombiesAmmount() {
+		
+	
 		Integer amountToAdd = RandomHandler.nextInt(RandomType.ZombieSpawns); 
 		Integer zombiesOnLastCol = ((PvzEnvironmentState) environment.getEnvironmentState()).getZombiesOnLastCol();
 		

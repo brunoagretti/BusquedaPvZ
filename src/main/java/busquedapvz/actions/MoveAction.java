@@ -36,11 +36,12 @@ public interface MoveAction {
 		    	}
 	    	}
 	    	
-	    	chomperState.setPosition(posToMove);
 	    	chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
+	    	chomperState.setPosition(posToMove.clone());
+	    	
 	    	cellToMove.setContainsAgent(true);
 	    	
-	    	System.out.println("MOVER: " + posToMove);//TODO DEBUG
+	    	//System.out.println("MOVER: " + posToMove);//TODO DEBUG
 	    	return chomperState;
 	    	
 	    }
@@ -61,12 +62,19 @@ public interface MoveAction {
 	    if(!invalidXCoord && !invalidYCoord) {
 	    	Cell cellToMove = chomperState.getKnownWorld()[posToMove.getX()][posToMove.getY()];
 	    	Cell cellToMoveEnvironment = environmentState.getWorld()[posToMove.getX()][posToMove.getY()];
+	    	//System.out.println(cellToMoveEnvironment.toString());
 	    	
 	    	if(cellToMove instanceof SunflowerCell) {
+	    		//System.out.println(((SunflowerCell) cellToMove).getSunQuantity());
 	    		chomperState.addEnergy(((SunflowerCell) cellToMove).getSunQuantity());
-	    		((SunflowerCell) cellToMove).takeSuns();
+	    		//((SunflowerCell) cellToMove).takeSuns();
+	    		
+	    		//System.out.println(((SunflowerCell) cellToMoveEnvironment).getSunQuantity());
 	    		environmentState.addChomperEnergy(((SunflowerCell) cellToMove).getSunQuantity());
 	    		((SunflowerCell) cellToMoveEnvironment).takeSuns();
+	    		
+	    		//System.out.println(((SunflowerCell) cellToMove).getSunQuantity());
+	    		//System.out.println(((SunflowerCell) cellToMoveEnvironment).getSunQuantity());
 	    		
 	    		
 	    	}
@@ -78,10 +86,11 @@ public interface MoveAction {
 		    	}
 	    	}
 	    	
-	    	chomperState.setPosition(posToMove.clone());
-	    	environmentState.setChomperPosition(posToMove.clone());
+	    	
 	    	chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
 	    	environmentState.getWorld()[chomperX][chomperY].setContainsAgent(false);
+	    	chomperState.setPosition(posToMove.clone());
+	    	environmentState.setChomperPosition(posToMove.clone());
 	    	cellToMove.setContainsAgent(true);
 	    	cellToMoveEnvironment.setContainsAgent(true);
 	    	

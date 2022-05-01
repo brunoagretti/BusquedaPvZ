@@ -17,11 +17,11 @@ public class PlantSunflower extends SearchAction{
 		ChomperAgentState chomperState = (ChomperAgentState) s;
 		
 		Cell cellToPlant = chomperState.getKnownWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()];
-		if(cellToPlant instanceof EmptyCell /*&& chomperState.getEnergy()>0*/) {//TODO ojo aca
+		if(cellToPlant instanceof EmptyCell && chomperState.getEnergy()>0) {//TODO ojo aca
 			cellToPlant = new SunflowerCell(cellToPlant.getPosition(),true,0);
-//			chomperState.decrementEnergy(1);
+			//chomperState.decrementEnergy(1);
 			chomperState.getKnownWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()] = cellToPlant;
-			System.out.println("PLANTAR: " + cellToPlant.getPosition());//TODO DEBUG
+			//System.out.println("PLANTAR: " + cellToPlant.getPosition());//TODO DEBUG
 			return chomperState;
 		}
 			

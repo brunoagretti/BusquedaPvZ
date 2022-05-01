@@ -34,7 +34,7 @@ public class Cell implements Cloneable{
     	boolean isEqual = false;
     	
     	if(obj instanceof Cell) {
-    		if(((Cell) obj).getPosition().equals(this.position) && ((Cell) obj).containsAgent() == this.containsAgent) {
+    		if(((Cell) obj).getPosition().equals(this.position) /*&& ((Cell) obj).containsAgent() == this.containsAgent*/) {
     			isEqual = true;
     		}
     	}
