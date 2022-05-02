@@ -1,5 +1,7 @@
 package busquedapvz;
 
+import busquedapvz.graphics.GamePanel;
+import busquedapvz.graphics.GameWindow;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.GoalBasedAgent;
@@ -33,7 +35,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
     
     @Override
     public void start() {
-
+    	GameWindow game = new GameWindow(1280,720, environment.getEnvironmentState().getWorld());
+    	game.setSize(1016, 599);
+  	  	game.setResizable(true);
+ 
         System.out.println("----------------------------------------------------");
         System.out.println("--- " + this.getSimulatorName() + " ---");
         System.out.println("----------------------------------------------------");
@@ -65,6 +70,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             System.out.println("Agent State: " + agent.getAgentState());
             System.out.println("Environment:\n" + environment);
+            game.nextFrame(environment.getEnvironmentState().getWorld());
             
 
             
@@ -85,7 +91,12 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             
             // After agent executes his action we should see if zombies Walk
             environment.walkZombies();
-
+            try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
         } while (!this.agentSucceeded(action) && !this.agentFailed(action));
 

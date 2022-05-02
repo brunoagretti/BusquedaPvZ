@@ -20,13 +20,6 @@ public class GameWindow extends JFrame {
 	public static final int COLS = PvzEnvironment.MAP_SIZE_X;
 	
 	private BufferedImage tiles[] = new BufferedImage[6];
-    Cell[][] map = {
-    		{new SunflowerCell(null,null,null),new SunflowerCell(null,null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null)},
-			{new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new ZombieCell(null,null,null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null)},
-			{new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null)},
-			{new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new ZombieCell(null,null,null,null),new EmptyCell(null,null),new EmptyCell(null,null)},
-			{new EmptyCell(null,null),new EmptyCell(null,null),new ZombieCell(null,null,null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null),new EmptyCell(null,null)}
-	};
     private BufferedImage gameBoard;
     private BufferedImage finalBoard;
     private static int SPACING = 10;
@@ -34,19 +27,34 @@ public class GameWindow extends JFrame {
     private static int CELL_HEIGHT = 100;
     private static int BOARD_WIDTH = (COLS + 1) * SPACING + COLS * CELL_WIDTH;
     private static int BOARD_HEIGHT = (ROWS + 1) * SPACING + ROWS * CELL_HEIGHT;
-    
+    private GamePanel panel;
     public GameWindow(int x, int y) {
     	
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     	gameBoard = new BufferedImage(BOARD_WIDTH, BOARD_HEIGHT, BufferedImage.TYPE_INT_RGB);
     	finalBoard = new BufferedImage(BOARD_WIDTH, BOARD_HEIGHT, BufferedImage.TYPE_INT_RGB);
-
     	setSize(x, y);
     	setVisible(true);
-    	GamePanel panel = new GamePanel(getGraphics());
-    	this.add(panel);
-
+    	panel = new GamePanel(getGraphics());
     	
+    	this.add(panel);
+    	
+    }
+    public GameWindow(int x, int y, Cell[][] map) {
+    	
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+    	gameBoard = new BufferedImage(BOARD_WIDTH, BOARD_HEIGHT, BufferedImage.TYPE_INT_RGB);
+    	finalBoard = new BufferedImage(BOARD_WIDTH, BOARD_HEIGHT, BufferedImage.TYPE_INT_RGB);
+    	setSize(x, y);
+    	setVisible(true);
+    	panel = new GamePanel(getGraphics(), map);
+    	
+    	this.add(panel);
+    	
+    }
+    
+    public void nextFrame(Cell[][] map) {
+    	panel.nextFrame(map);
     }
 
 }

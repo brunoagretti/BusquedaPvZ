@@ -33,11 +33,11 @@ public class GamePanel extends JPanel {
 	
 	private BufferedImage tiles[] = new BufferedImage[6];
     Cell[][] map = {
-    		{new SunflowerCell(null,false,0),new SunflowerCell(null,false,0),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false)},
-			{new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new ZombieCell(null,false,2,34),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false)},
+    		{new SunflowerCell(null,false,12),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false)},
+			{new EmptyCell(null,false),new SunflowerCell(null,false,3),new EmptyCell(null,false),new EmptyCell(null,false),new ZombieCell(null,false,2,34),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false)},
 			{new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false)},
 			{new EmptyCell(null,false),new EmptyCell(null,true),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new ZombieCell(null,false,3,34),new EmptyCell(null,false),new EmptyCell(null,false)},
-			{new EmptyCell(null,false),new EmptyCell(null,false),new ZombieCell(null,false,1,34),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false)}
+			{new EmptyCell(null,false),new EmptyCell(null,false),new ZombieCell(null,false,4,34),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false),new EmptyCell(null,false)}
 	};
     private static int SPACING = 10;
     private static int CELL_WIDTH = 100;
@@ -66,7 +66,24 @@ public class GamePanel extends JPanel {
 		}
     	paintComponent(graphics);
     }
-
+    
+    public GamePanel(Graphics graphics, Cell[][] map) {
+        this.graphics=graphics;
+      	try {
+  			chomperImage = ImageIO.read(getClass().getResource("chomper.png"));
+  			sunflowerImage = ImageIO.read(getClass().getResource("sunflower.png"));
+  			sunImage = ImageIO.read(getClass().getResource("sun.png"));
+  			zombieImage[0] = ImageIO.read(getClass().getResource("zombie1.png"));
+  			zombieImage[1] = ImageIO.read(getClass().getResource("zombie2.png"));
+  			zombieImage[2] = ImageIO.read(getClass().getResource("zombie3.png"));
+  			zombieImage[3] = ImageIO.read(getClass().getResource("zombie4.png"));
+  			zombieImage[4] = ImageIO.read(getClass().getResource("zombie5.png"));
+  			this.map = map;
+  		} catch (IOException e) {
+  			e.printStackTrace();
+  		}
+      	paintComponent(graphics);
+      }
     @Override
     public void paintComponent(Graphics g2) {
         super.paintComponent(g2);   
@@ -80,22 +97,22 @@ public class GamePanel extends JPanel {
 				int y = SPACING + SPACING * row + CELL_HEIGHT * row;
 				g.setColor(new Color(0, 153, 0));
 				g.fillRect(x, y, CELL_WIDTH, CELL_HEIGHT);
-				if(map[row][col] instanceof SunflowerCell) {
+				if(map[col][row] instanceof SunflowerCell) {
 				  g.drawImage(sunflowerImage, x, y, null);
 				}
-				if(map[row][col].containsAgent()) {
+				if(map[col][row].containsAgent()) {
 				  g.drawImage(chomperImage, x, y, null);
                 }
-                if(map[row][col] instanceof ZombieCell) {
-                  int hp = ((ZombieCell) map[row][col]).getHp();
+                if(map[col][row] instanceof ZombieCell) {
+                  int hp = ((ZombieCell) map[col][row]).getHp();
                   g.drawImage(zombieImage[hp-1], x, y, null);
                   
                   g.setColor(new Color(255, 255, 255));
                   g.setFont(g.getFont().deriveFont(30f));
                   g.drawString("HP: " + hp, x+15, y+88);
                 }
-                if(map[row][col] instanceof SunflowerCell) {
-                  int suns = ((SunflowerCell) map[row][col]).getSunQuantity();
+                if(map[col][row] instanceof SunflowerCell) {
+                  int suns = ((SunflowerCell) map[col][row]).getSunQuantity();
                   g.drawImage(sunImage, x, y, null);
                   g.setColor(new Color(255, 255, 26));
                   g.setFont(g.getFont().deriveFont(30f));
