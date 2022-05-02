@@ -3,19 +3,21 @@ package busquedapvz;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import busquedapvz.graphics.GameWindow;
+
 public class Main {
 
   public static void main(String[] args) {
    
 
-    PvzEnvironment chomperEnvironment = new PvzEnvironment();
-    
-    ChomperAgent chomperAgent = new ChomperAgent(chomperEnvironment.getEnvironmentState().getZombiesAmount());
-    
-    ChomperSimulator simulator =
-            new ChomperSimulator(chomperEnvironment, chomperAgent);
-    
-    simulator.start();
+//    PvzEnvironment chomperEnvironment = new PvzEnvironment();
+//    
+//    ChomperAgent chomperAgent = new ChomperAgent(chomperEnvironment.getEnvironmentState().getZombiesAmount());
+//    
+//    ChomperSimulator simulator =
+//            new ChomperSimulator(chomperEnvironment, chomperAgent);
+//    
+//    simulator.start();
 
 
     
@@ -40,6 +42,12 @@ public class Main {
 //    world2[0][3].setContainsAgent(true);
 //    
 //    System.out.println(Arrays.deepEquals(world, world2));
+	  
+	  GameWindow game = new GameWindow(1280,720);
+	  game.setSize(1016, 599);
+	  game.setResizable(false);
+	  
+	  
   }
 
 }
