@@ -21,27 +21,28 @@ import frsf.cidisi.faia.agent.search.SearchBasedAgent;
 import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
+import frsf.cidisi.faia.solver.search.Strategy;
 
 
 public class ChomperAgent extends SearchBasedAgent {
-	
+	private Vector<SearchAction> operators;
 	public ChomperAgent(Integer zombiesAmount) {
 		// The Chomper Goal
-        ChomperGoal goal = new ChomperGoal();
+        ChomperGoal goal = new ChomperGoal(1);
 
         // The Chomper Agent State
         ChomperAgentState ChomperState = new ChomperAgentState(zombiesAmount);
         this.setAgentState(ChomperState);
-
+        ChomperState.setObChanged(false);
         // Create the operators
-        Vector<SearchAction> operators = new Vector<SearchAction>();
+        operators = new Vector<SearchAction>();
         operators.addElement(new PlantSunflower());
         operators.addElement(new AttackDown());
         operators.addElement(new AttackUp());
         operators.addElement(new AttackLeft());
         operators.addElement(new AttackRight());
-        operators.addElement(new GoUp());
         operators.addElement(new GoRight());
+        operators.addElement(new GoUp());
         operators.addElement(new GoDown());
         operators.addElement(new GoLeft());
         // Create the Problem which the Chomper will resolve
@@ -57,8 +58,12 @@ public class ChomperAgent extends SearchBasedAgent {
   @Override
   public Action selectAction() {
 	// Create the search strategy
-	  BreathFirstSearch strategy = new BreathFirstSearch();
-//	  DepthFirstSearch strategy = new DepthFirstSearch();
+	  Strategy strategy;
+	  ChomperAgentState state = (ChomperAgentState) getAgentState();
+	 // if(!state.getObChanged())
+	 	strategy = new BreathFirstSearch();
+	//  else
+		//strategy = new DepthFirstSearch();
       /**
        * Another search strategy examples:
        * 
@@ -87,7 +92,7 @@ public class ChomperAgent extends SearchBasedAgent {
 
       /* Generate an XML file with the search tree. It can also be generated
        * in other formats like PDF with PDF_TREE */
-      searchSolver.setVisibleTree(Search.XML_TREE);
+      searchSolver.setVisibleTree(Search.WHITHOUT_TREE);
 
       // Set the Search searchSolver.
       this.setSolver(searchSolver);
@@ -104,5 +109,11 @@ public class ChomperAgent extends SearchBasedAgent {
       // Return the selected action
       return selectedAction;
   }
+
+public void changeObjective() {
+	// TODO Auto-generated method stub
+	this.setProblem(new Problem(new ChomperGoal(2), ((ChomperAgentState) getAgentState()), operators));
+	((ChomperAgentState) getAgentState()).setObChanged(true);
+}
 
 }

@@ -11,7 +11,7 @@ public class RandomHandler {
 		switch (type){
 		case ZombieAmount:
 			// Must be between 5 and 20 
-			n = r.nextInt(15) + 5;
+			n = r.nextInt(3) + 1;
 			break;
 			
 		case ZombieSpawns:

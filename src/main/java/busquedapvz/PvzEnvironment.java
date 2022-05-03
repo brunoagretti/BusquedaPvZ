@@ -105,6 +105,7 @@ public class PvzEnvironment extends Environment {
 				this.getEnvironmentState().getWorld()[MAP_SIZE_X - 1][posY] = zombieToAdd;
 				zombiesOnMap.add(zombieToAdd);
 				remainingZombies--;
+				this.getEnvironmentState().decrementZombiesAmount(1);
 			}
 
 		}

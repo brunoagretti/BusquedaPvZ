@@ -17,6 +17,8 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	Integer zombiesAmount;
 	Position position;
 	private Position lastPos;
+	Boolean obChanged;
+	Integer zombieEnergy=0;
 
 	public ChomperAgentState(Integer zombiesAmount) {
 		knownWorld = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
@@ -120,7 +122,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
             }
         }
 		ChomperAgentState ret = new ChomperAgentState(newWorld, Integer.valueOf(energy),
-				Integer.valueOf(zombiesAmount), new Position(position.getX(), position.getY()), new Position(lastPos.getX(), lastPos.getY()));
+				Integer.valueOf(zombiesAmount), new Position(position.getX(), position.getY()), new Position(lastPos.getX(), lastPos.getY()), Boolean.valueOf(obChanged));
 		
 		return ret;
 	}
@@ -135,6 +137,8 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		// }
 		// }
 		// }
+		if(obChanged)
+			return false;
 		for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
 			if (!(knownWorld[0][j] instanceof SunflowerCell)) {
 				
@@ -150,9 +154,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 			for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
 				
 				if ((knownWorld[i][j] instanceof ZombieCell)) {
-					System.out.println("ACA");
-					return false;
-					
+					return false;	
 				}
 			}
 		}

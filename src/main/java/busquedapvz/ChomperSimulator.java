@@ -15,6 +15,7 @@ import frsf.cidisi.faia.state.AgentState;
 
 public class ChomperSimulator extends SearchBasedAgentSimulator {
 	PvzEnvironment environment;
+	Integer totalZombies;
 	
 	public ChomperSimulator(Environment environment, Agent agent) {
 		super(environment, agent);
@@ -43,7 +44,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
         GoalBasedAgent agent;
 
         agent = (ChomperAgent) this.getAgents().firstElement();
-
+        ChomperAgentState state = (ChomperAgentState) agent.getAgentState();
         System.out.println("The generated amount of zombies in the simulation is: " + environment.getEnvironmentState().getZombiesAmount()); 
        
 
@@ -66,7 +67,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println("Environment:\n" + environment);
             
 
-            
+            if(state.allMapSunflowered()) {
+            	System.out.println("Llego");
+            	((ChomperAgent) agent).changeObjective();
+            }
             System.out.println("Asking the agent for an action...");
             action = agent.selectAction();
 
@@ -79,13 +83,22 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             System.out.println("Action returned: " + action);
             System.out.println();
-
+            
+            
+            
             this.actionReturned(agent, action);
             
             // After agent executes his action we should see if zombies Walk
             environment.walkZombies();
-
-
+            try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+            
+            
         } while (!this.agentSucceeded(action) && !this.agentFailed(action));
 
         // Check what happened, if agent has reached the goal or not.
@@ -110,13 +123,21 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 	
 		Integer amountToAdd = RandomHandler.nextInt(RandomType.ZombieSpawns); 
 		Integer zombiesOnLastCol = ((PvzEnvironmentState) environment.getEnvironmentState()).getZombiesOnLastCol();
+		PvzEnvironmentState state = ((PvzEnvironmentState) environment.getEnvironmentState());
+		
 		
 		// If zombies on last column are less than 3 we can spawn up to 3
 		// If not, we need to reduce the amount to a value we can spawn
-		if(zombiesOnLastCol>=3) {
-			while(zombiesOnLastCol + amountToAdd > 5)
-				amountToAdd--;
+		if(state.getZombiesAmount()>0) {
+			if(zombiesOnLastCol>=3) {
+				while(zombiesOnLastCol + amountToAdd > 5 && amountToAdd>((PvzEnvironmentState) environment.getEnvironmentState()).getZombiesAmount())
+					amountToAdd--;
+			}
 		}
+		else {
+			amountToAdd=0;
+		}
+		
 		
 		
 		environment.getEnvironmentState().decrementZombiesAmount(amountToAdd);
