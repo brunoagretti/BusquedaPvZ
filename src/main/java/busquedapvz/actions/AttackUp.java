@@ -21,7 +21,7 @@ public class AttackUp extends SearchAction implements AttackAction{
 
   @Override
   public Double getCost() {
-      return null;
+	  return Double.valueOf(1.5);
   }
 
   @Override

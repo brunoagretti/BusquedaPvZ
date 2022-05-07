@@ -101,6 +101,7 @@ public class PvzEnvironmentState extends EnvironmentState {
 		Cell contentToMove = world[oldPos.getX()][oldPos.getY()];
 		world[oldPos.getX()][oldPos.getY()] = new EmptyCell(oldPos, false);
 		world[newPos.getX()][newPos.getY()] = contentToMove;
+		contentToMove.setPosition(newPos);
 	}
 
 	public boolean zombieOnPosition(Position pos) {

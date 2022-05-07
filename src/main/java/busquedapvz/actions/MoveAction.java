@@ -40,6 +40,7 @@ public interface MoveAction {
 	    	chomperState.setPosition(posToMove.clone());
 	    	
 	    	cellToMove.setContainsAgent(true);
+	    	chomperState.increaseCeldasVisitadas(1);
 	    	
 	    	//System.out.println("MOVER: " + posToMove);//TODO DEBUG
 	    	return chomperState;
@@ -93,7 +94,7 @@ public interface MoveAction {
 	    	environmentState.setChomperPosition(posToMove.clone());
 	    	cellToMove.setContainsAgent(true);
 	    	cellToMoveEnvironment.setContainsAgent(true);
-	    	
+	    	chomperState.increaseCeldasVisitadas(1);
 	    	
 	    	return environmentState;
 	    	

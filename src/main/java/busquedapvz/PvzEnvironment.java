@@ -123,7 +123,7 @@ public class PvzEnvironment extends Environment {
 			if (n <= zombie.getWalkChance()) {
 				Position newPos = zombie.getPosition().clone();
 				newPos.decrementX();
-
+				
 				if (newPos.getX() < 0) {
 					getEnvironmentState().setAgentFailed(true);
 					getEnvironmentState().getWorld()[zombie.getPosition().getX()][zombie.getPosition()
@@ -131,6 +131,7 @@ public class PvzEnvironment extends Environment {
 				} else {
 					if (!((PvzEnvironmentState) this.environmentState).zombieOnPosition(newPos)) {
 						moveZombie(zombie.getPosition(), newPos);
+						System.out.println("Movi el zombie");
 						zombie.setWalkChance(34);
 					}
 				}

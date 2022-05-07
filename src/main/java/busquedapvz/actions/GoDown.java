@@ -22,7 +22,7 @@ public class GoDown extends SearchAction implements MoveAction{
 	@Override
 	public Double getCost() {
 		// TODO Auto-generated method stub
-		return null;
+		return Double.valueOf(2.0);
 	}
 
 	@Override

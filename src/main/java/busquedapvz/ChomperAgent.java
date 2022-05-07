@@ -22,6 +22,8 @@ import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 import frsf.cidisi.faia.solver.search.Strategy;
+import frsf.cidisi.faia.solver.search.UniformCostSearch;
+import frsf.cidisi.faia.solver.search.IStepCostFunction;
 
 
 public class ChomperAgent extends SearchBasedAgent {
@@ -60,10 +62,14 @@ public class ChomperAgent extends SearchBasedAgent {
 	// Create the search strategy
 	  Strategy strategy;
 	  ChomperAgentState state = (ChomperAgentState) getAgentState();
-	 // if(!state.getObChanged())
+	  if(!state.getObChanged())
 	 	strategy = new BreathFirstSearch();
-	//  else
-		//strategy = new DepthFirstSearch();
+	  else {
+		strategy = new BreathFirstSearch();
+		//IStepCostFunction costFunction = new CostFunction();
+		//strategy = new UniformCostSearch(costFunction);
+	  }
+		
       /**
        * Another search strategy examples:
        * 
