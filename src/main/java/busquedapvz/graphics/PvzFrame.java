@@ -97,6 +97,7 @@ public class PvzFrame extends JFrame {
 
 	public PvzFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setTitle("Plants Vs Zombies - Simulator");
 		tableData = getEmptyImageArray();
 		loadImages();
 		

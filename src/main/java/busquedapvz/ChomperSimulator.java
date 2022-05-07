@@ -1,5 +1,6 @@
 package busquedapvz;
 
+import busquedapvz.graphics.PvzFrame;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.GoalBasedAgent;
@@ -47,9 +48,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
         ChomperAgentState state = (ChomperAgentState) agent.getAgentState();
         System.out.println("The generated amount of zombies in the simulation is: " + environment.getEnvironmentState().getZombiesAmount()); 
        
+		PvzFrame game = new PvzFrame(environment.getEnvironmentState());
+		game.setResizable(true);
 
         do {
-
         	
             System.out.println("------------------------------------");
             System.out.println("Generating environment changes...");
@@ -97,7 +99,8 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 				e.printStackTrace();
 			}
             
-            
+            //Draw map
+            game.drawTable(environment.getEnvironmentState());
             
         } while (!this.agentSucceeded(action) && !this.agentFailed(action));
 

@@ -66,6 +66,7 @@ public class ChomperAgent extends SearchBasedAgent {
 	 	strategy = new BreathFirstSearch();
 	  else {
 		strategy = new BreathFirstSearch();
+//		strategy = new DepthFirstSearch();
 		//IStepCostFunction costFunction = new CostFunction();
 		//strategy = new UniformCostSearch(costFunction);
 	  }
@@ -112,14 +113,15 @@ public class ChomperAgent extends SearchBasedAgent {
           Logger.getLogger(ChomperAgent.class.getName()).log(Level.SEVERE, null, ex);
       }
 
-      // Return the selected action
-      return selectedAction;
-  }
+		// Return the selected action
+		return selectedAction;
+	}
 
-public void changeObjective() {
-	// TODO Auto-generated method stub
-	this.setProblem(new Problem(new ChomperGoal(2), ((ChomperAgentState) getAgentState()), operators));
-	((ChomperAgentState) getAgentState()).setObChanged(true);
-}
+	public void changeObjective() {
+		// TODO Auto-generated method stub
+		this.setProblem(new Problem(new ChomperGoal(2),
+				((ChomperAgentState) getAgentState()), operators));
+		((ChomperAgentState) getAgentState()).setObChanged(true);
+	}
 
 }

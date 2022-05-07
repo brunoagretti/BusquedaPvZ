@@ -1,6 +1,8 @@
 package busquedapvz;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
@@ -34,16 +36,45 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		zombiesAmount = per.getZombiesAmount();
 		position = per.getChomperPosition();
 
+		ArrayList<ZombieCell> previouslySensedZombies = new ArrayList<>();
+		for(int i = 0 ; i < PvzEnvironment.MAP_SIZE_X; i++) {
+			for(int j=0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+				if(knownWorld[i][j] instanceof ZombieCell) {
+					previouslySensedZombies.add((ZombieCell) knownWorld[i][j]);
+				}
+			}
+		}
+		
 		per.getSensedCells().forEach((Position pos, Cell cell) -> {
-			if(cell instanceof ZombieCell) {
+			// Si un zombie es percibido por el agente y éste ya estaba previamente
+			// en su memoria, pero en el estado anterior, entonces se infiere que
+			// detrás no hay nada
+			if (cell instanceof ZombieCell) {
 				for(int i=pos.getX()+1;i<PvzEnvironment.MAP_SIZE_X;i++) {
 					knownWorld[i][pos.getY()] = new EmptyCell(new Position(i,pos.getY()), false);
 				}
+			}
+			Optional<ZombieCell> zombieOpt = previousZombieThere(previouslySensedZombies, pos);
+			if(cell instanceof EmptyCell && zombieOpt.isPresent()) {
+				if(pos.getX()-1>=0) {
+					knownWorld[pos.getX()-1][pos.getY()] = zombieOpt.get();
+					zombieOpt.get().setPosition(new Position(pos.getX()-1,pos.getY()));
+				} //Else, zombie entered the house and simulation is finished
 			}
 			knownWorld[pos.getX()][pos.getY()] = cell;
 			
 		});
 		
+	}
+	
+	private Optional<ZombieCell> previousZombieThere(ArrayList<ZombieCell> zombies,
+			Position pos) {
+		for(ZombieCell zombie: zombies) {
+			if(pos.equals(zombie.getPosition())) {
+				return Optional.of(zombie);
+			}
+		}
+		return Optional.empty();
 	}
 
 	@Override

@@ -21,8 +21,6 @@ public class ChomperGoal extends GoalTest{
 			}
 			else
 				return false;
-
-		
 	}
 	
 }
