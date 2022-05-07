@@ -1,7 +1,7 @@
 package busquedapvz;
 
 import busquedapvz.graphics.GamePanel;
-import busquedapvz.graphics.GameWindow;
+import busquedapvz.graphics.PvzFrame;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.GoalBasedAgent;
@@ -35,7 +35,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
     
     @Override
     public void start() {
-    	GameWindow game = new GameWindow(1280,720, environment.getEnvironmentState().getWorld());
+    	PvzFrame game = new PvzFrame(environment.getEnvironmentState());
     	game.setSize(1016, 599);
   	  	game.setResizable(true);
  
@@ -70,7 +70,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             System.out.println("Agent State: " + agent.getAgentState());
             System.out.println("Environment:\n" + environment);
-            game.nextFrame(environment.getEnvironmentState().getWorld());
+            game.drawTable(environment.getEnvironmentState());
             
 
             
