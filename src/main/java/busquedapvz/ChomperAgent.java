@@ -30,7 +30,7 @@ public class ChomperAgent extends SearchBasedAgent {
 	private Vector<SearchAction> operators;
 	public ChomperAgent(Integer zombiesAmount) {
 		// The Chomper Goal
-        ChomperGoal goal = new ChomperGoal(1);
+        EnergyGatheringGoal goal = new EnergyGatheringGoal();
 
         // The Chomper Agent State
         ChomperAgentState ChomperState = new ChomperAgentState(zombiesAmount);
@@ -38,15 +38,15 @@ public class ChomperAgent extends SearchBasedAgent {
         ChomperState.setObChanged(false);
         // Create the operators
         operators = new Vector<SearchAction>();
-        operators.addElement(new PlantSunflower());
         operators.addElement(new AttackDown());
         operators.addElement(new AttackUp());
         operators.addElement(new AttackLeft());
         operators.addElement(new AttackRight());
+        operators.addElement(new PlantSunflower());
         operators.addElement(new GoRight());
+        operators.addElement(new GoLeft());
         operators.addElement(new GoUp());
         operators.addElement(new GoDown());
-        operators.addElement(new GoLeft());
         // Create the Problem which the Chomper will resolve
         Problem problem = new Problem(goal, ChomperState, operators);
         this.setProblem(problem);
@@ -57,51 +57,51 @@ public class ChomperAgent extends SearchBasedAgent {
     this.getAgentState().updateState(p);
   }
 
-  @Override
-  public Action selectAction() {
-	// Create the search strategy
-	  Strategy strategy;
-	  ChomperAgentState state = (ChomperAgentState) getAgentState();
-	  if(!state.getObChanged())
-	 	strategy = new BreathFirstSearch();
-	  else {
-		strategy = new BreathFirstSearch();
-//		strategy = new DepthFirstSearch();
-		//IStepCostFunction costFunction = new CostFunction();
-		//strategy = new UniformCostSearch(costFunction);
-	  }
-		
-      /**
-       * Another search strategy examples:
-       * 
-       * Depth First Search:
-       * DepthFirstSearch strategy = new DepthFirstSearch();
-       * 
-       * Breath First Search:
-       * BreathFirstSearch strategy = new BreathFirstSearch();
-       * 
-       * Uniform Cost:
-       * IStepCostFunction costFunction = new CostFunction();
-       * UniformCostSearch strategy = new UniformCostSearch(costFunction);
-       * 
-       * A Star Search:
-       * IStepCostFunction cost = new CostFunction();
-       * IEstimatedCostFunction heuristic = new Heuristic();
-       * AStarSearch strategy = new AStarSearch(cost, heuristic);
-       * 
-       * Greedy Search:
-       * IEstimatedCostFunction heuristic = new Heuristic();
-       * GreedySearch strategy = new GreedySearch(heuristic);
-       */
+	@Override
+	public Action selectAction() {
+		// Create the search strategy
+		Strategy strategy;
+		ChomperAgentState state = (ChomperAgentState) getAgentState();
+		if (!state.getObChanged())
+			strategy = new BreathFirstSearch();
+		// strategy = new DepthFirstSearch();
+		else {
+//			strategy = new BreathFirstSearch();
+			 strategy = new DepthFirstSearch();
+			// IStepCostFunction costFunction = new CostFunction();
+			// strategy = new UniformCostSearch(costFunction);
+		}
 
-      // Create a Search object with the strategy
-      Search searchSolver = new Search(strategy);
+		/**
+		 * Another search strategy examples:
+		 * 
+		 * Depth First Search: DepthFirstSearch strategy = new
+		 * DepthFirstSearch();
+		 * 
+		 * Breath First Search: BreathFirstSearch strategy = new
+		 * BreathFirstSearch();
+		 * 
+		 * Uniform Cost: IStepCostFunction costFunction = new CostFunction();
+		 * UniformCostSearch strategy = new UniformCostSearch(costFunction);
+		 * 
+		 * A Star Search: IStepCostFunction cost = new CostFunction();
+		 * IEstimatedCostFunction heuristic = new Heuristic(); AStarSearch
+		 * strategy = new AStarSearch(cost, heuristic);
+		 * 
+		 * Greedy Search: IEstimatedCostFunction heuristic = new Heuristic();
+		 * GreedySearch strategy = new GreedySearch(heuristic);
+		 */
 
-      /* Generate an XML file with the search tree. It can also be generated
-       * in other formats like PDF with PDF_TREE */
-      searchSolver.setVisibleTree(Search.WHITHOUT_TREE);
+		// Create a Search object with the strategy
+		Search searchSolver = new Search(strategy);
 
-      // Set the Search searchSolver.
+		/*
+		 * Generate an XML file with the search tree. It can also be generated
+		 * in other formats like PDF with PDF_TREE
+		 */
+		searchSolver.setVisibleTree(Search.EFAIA_TREE);
+
+		// Set the Search searchSolver.
       this.setSolver(searchSolver);
 
       // Ask the solver for the best action
@@ -118,10 +118,12 @@ public class ChomperAgent extends SearchBasedAgent {
 	}
 
 	public void changeObjective() {
-		// TODO Auto-generated method stub
+		
 		this.setProblem(new Problem(new ChomperGoal(2),
 				((ChomperAgentState) getAgentState()), operators));
 		((ChomperAgentState) getAgentState()).setObChanged(true);
+		
 	}
+	
 
 }

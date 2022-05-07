@@ -51,6 +51,8 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		PvzFrame game = new PvzFrame(environment.getEnvironmentState());
 		game.setResizable(true);
 
+		EnergyGatheringGoal energyGatheringGoal = new EnergyGatheringGoal();
+		
         do {
         	
             System.out.println("------------------------------------");
@@ -60,6 +62,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             // Spawns zombies with 50% chance
             environment.addZombies(generateZombiesAmmount());
 
+
             System.out.println("Sending perception to agent...");
             perception = this.getPercept();
             agent.see(perception);
@@ -68,14 +71,21 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println("Agent State: " + agent.getAgentState());
             System.out.println("Environment:\n" + environment);
             
-
-            if(state.allMapSunflowered()) {
+            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
             	System.out.println("Llego");
             	((ChomperAgent) agent).changeObjective();
             }
+
             System.out.println("Asking the agent for an action...");
             action = agent.selectAction();
 
+            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
+            	System.out.println("Llego");
+            	((ChomperAgent) agent).changeObjective();
+            }
+            
+            // ~After~ Before? agent executes his action we should see if zombies Walk
+            environment.walkZombies();
          
       
             
@@ -86,12 +96,9 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println("Action returned: " + action);
             System.out.println();
             
-            
-            
             this.actionReturned(agent, action);
             
-            // After agent executes his action we should see if zombies Walk
-            environment.walkZombies();
+            
             try {
 				Thread.sleep(1500);
 			} catch (InterruptedException e) {
@@ -131,7 +138,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		
 		// If zombies on last column are less than 3 we can spawn up to 3
 		// If not, we need to reduce the amount to a value we can spawn
-		if(state.getZombiesAmount()>0) {
+		if(state.getZombiesAmount()>state.getSpawnedZombies()) {
 			if(zombiesOnLastCol>=3) {
 				while(zombiesOnLastCol + amountToAdd > 5 && amountToAdd>((PvzEnvironmentState) environment.getEnvironmentState()).getZombiesAmount())
 					amountToAdd--;
@@ -144,6 +151,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		
 		
 		environment.getEnvironmentState().decrementZombiesAmount(amountToAdd);
+		environment.getEnvironmentState().addSpawnedZombies(amountToAdd);
 		
 		
 		 return amountToAdd;

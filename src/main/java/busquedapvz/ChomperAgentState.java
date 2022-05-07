@@ -108,8 +108,6 @@ public class ChomperAgentState extends SearchBasedAgentState {
 
 	@Override
 	public void initState() {
-		// SET KNOWN WORLD TO UNKNOWN
-
 
       knownWorld = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
       for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
@@ -160,14 +158,14 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	
 	
 	
-	public boolean allMapSunflowered() {
-		// for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
-		// for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
-		// if(!(knownWorld[i][j] instanceof SunflowerCell)) {
-		// return false;
-		// }
-		// }
-		// }
+	public boolean sunflowersPlaced() {
+//		for (int i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+//			for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+//				if (!(knownWorld[i][j] instanceof SunflowerCell)) {
+//					return false;
+//				}
+//			}
+//		}
 		if(obChanged)
 			return false;
 		for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {

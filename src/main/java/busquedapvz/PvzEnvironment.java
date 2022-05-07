@@ -36,7 +36,6 @@ public class PvzEnvironment extends Environment {
 
 		ret.zombiesAmount = environmentState.getZombiesAmount();
 		ret.chomperEnergy = getEnvironmentState().getChomperEnergy();
-		System.out.println("Energia enviada: " + ret.chomperEnergy);
 	
 		ret.chomperPosition = environmentState.getChomperPosition();
 		for (Integer i = chomperPositionX; i < PvzEnvironment.MAP_SIZE_X; i++) {
@@ -130,8 +129,14 @@ public class PvzEnvironment extends Environment {
 							.getY()] = new EmptyCell(zombie.getPosition(), false);
 				} else {
 					if (!((PvzEnvironmentState) this.environmentState).zombieOnPosition(newPos)) {
+						zombie.setContainsAgent(getEnvironmentState().getWorld()[newPos.getX()][newPos.getY()].containsAgent());
 						moveZombie(zombie.getPosition(), newPos);
-						System.out.println("Movi el zombie");
+						
+						//Resta energía del agente
+						if(zombie.containsAgent()) {
+							getEnvironmentState().decrementChomperEnergy(2*zombie.getHp());
+						}
+						
 						zombie.setWalkChance(34);
 					}
 				}

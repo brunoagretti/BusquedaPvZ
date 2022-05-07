@@ -65,7 +65,7 @@ public interface MoveAction {
 	    	Cell cellToMoveEnvironment = environmentState.getWorld()[posToMove.getX()][posToMove.getY()];
 	    	//System.out.println(cellToMoveEnvironment.toString());
 	    	
-	    	if(cellToMove instanceof SunflowerCell) {
+	    	if(cellToMoveEnvironment instanceof SunflowerCell) {
 	    		//System.out.println(((SunflowerCell) cellToMove).getSunQuantity());
 	    		chomperState.addEnergy(((SunflowerCell) cellToMove).getSunQuantity());
 	    		//((SunflowerCell) cellToMove).takeSuns();

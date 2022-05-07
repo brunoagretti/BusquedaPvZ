@@ -17,7 +17,8 @@ public class PvzEnvironmentState extends EnvironmentState {
 	 Cell world[][];
 	 Position chomperPosition;
 	 Integer chomperEnergy;
-	 Integer zombiesAmount;
+	 Integer zombiesAmount;//Zombies that will be added
+	 Integer spawnedZombies;
 	
 	Boolean agentFailed = false;
 	
@@ -36,6 +37,7 @@ public class PvzEnvironmentState extends EnvironmentState {
 		
 		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); 
 		zombiesAmount = RandomHandler.nextInt(RandomType.ZombieAmount);
+		spawnedZombies=0;
 		
 		chomperPosition = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));
 		world[0][chomperPosition.getY()].setContainsAgent(true);
@@ -98,6 +100,7 @@ public class PvzEnvironmentState extends EnvironmentState {
     }
 
 	public void updatePosition(Position oldPos, Position newPos) {
+		 
 		Cell contentToMove = world[oldPos.getX()][oldPos.getY()];
 		world[oldPos.getX()][oldPos.getY()] = new EmptyCell(oldPos, false);
 		world[newPos.getX()][newPos.getY()] = contentToMove;
@@ -123,6 +126,10 @@ public class PvzEnvironmentState extends EnvironmentState {
 
 	public void decrementZombiesAmount(Integer amount) {
 		zombiesAmount -= amount;
+	}
+	
+	public void addSpawnedZombies(Integer amount) {
+		spawnedZombies += amount;
 	}
 
     public void decrementChomperEnergy(Integer amount) {

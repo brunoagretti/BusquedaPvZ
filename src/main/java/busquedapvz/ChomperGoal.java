@@ -9,18 +9,17 @@ public class ChomperGoal extends GoalTest{
 	public ChomperGoal(Integer goal) {
 		this.goal = goal;
 	}
-	
+
 	@Override
 	public boolean isGoalState(AgentState agentState) {
 		ChomperAgentState chomperState = (ChomperAgentState) agentState;
-			if(goal == 2 && chomperState.noZombiesOnMap()) {
-				return true;
-			}
-			if(goal == 1 && chomperState.allMapSunflowered()) {
-				return true;
-			}
-			else
-				return false;
+		if (goal == 2 && chomperState.noZombiesOnMap()) {
+			return true;
+		}
+		if (goal == 1 && chomperState.sunflowersPlaced()) {
+			return true;
+		} else
+			return false;
 	}
-	
+
 }
