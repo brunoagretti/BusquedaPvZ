@@ -34,7 +34,7 @@ public class PvzEnvironment extends Environment {
 
 		Cell[][] actualEnvironmentState = environmentState.getWorld();
 
-		ret.zombiesAmount = environmentState.getZombiesAmount();
+		ret.zombiesAmount = environmentState.getRemainingZombiesAmount();
 		ret.chomperEnergy = getEnvironmentState().getChomperEnergy();
 	
 		ret.chomperPosition = environmentState.getChomperPosition();
@@ -93,22 +93,24 @@ public class PvzEnvironment extends Environment {
 		}
 	}
 
-	public void addZombies(Integer amount) {
-		Integer remainingZombies = amount;
-		while (remainingZombies > 0) {
-			Integer posY = RandomHandler.nextInt(RandomType.ZombiePosition);
+	public void generateZombies() {
+		PvzEnvironmentState state = this.getEnvironmentState();
+		
+		//Max zombies that will spawn in this cycle
+		Integer spawningZombies = RandomHandler.nextInt(RandomType.ZombieSpawns);
+		
+		while (state.getZombiesLeftToSpawn()>0 && spawningZombies>0) {
 
-			if (!(this.getEnvironmentState().getWorld()[MAP_SIZE_X - 1][posY] instanceof ZombieCell)) {
+			Integer posY = RandomHandler.nextInt(RandomType.ZombiePosition);
+			if (!(state.getWorld()[MAP_SIZE_X - 1][posY] instanceof ZombieCell)) {
 				ZombieCell zombieToAdd = new ZombieCell(new Position(MAP_SIZE_X - 1, posY), false,
 						RandomHandler.nextInt(RandomType.ZombieHp), 34);
-				this.getEnvironmentState().getWorld()[MAP_SIZE_X - 1][posY] = zombieToAdd;
+				state.getWorld()[MAP_SIZE_X - 1][posY] = zombieToAdd;
 				zombiesOnMap.add(zombieToAdd);
-				remainingZombies--;
-				this.getEnvironmentState().decrementZombiesAmount(1);
+				spawningZombies--;
+				state.decrementZombiesToSpawn(1);
 			}
-
 		}
-
 	}
 
 	// Fires the chance of zombies walking 1 step.

@@ -64,10 +64,10 @@ public class ChomperAgent extends SearchBasedAgent {
 		ChomperAgentState state = (ChomperAgentState) getAgentState();
 		if (!state.getObChanged())
 			strategy = new BreathFirstSearch();
-		// strategy = new DepthFirstSearch();
+//		 strategy = new DepthFirstSearch();
 		else {
-//			strategy = new BreathFirstSearch();
-			 strategy = new DepthFirstSearch();
+			strategy = new BreathFirstSearch();
+//			 strategy = new DepthFirstSearch();
 			// IStepCostFunction costFunction = new CostFunction();
 			// strategy = new UniformCostSearch(costFunction);
 		}

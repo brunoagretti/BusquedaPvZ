@@ -37,7 +37,7 @@ public interface AttackAction {
         chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(posToAttack.clone(), false);
         chomperState.decrementEnergy(((ZombieCell) cellToAttack).getHp());
         chomperState.decrementZombiesAmount(1);
-       // System.out.println("ATACAR: " + posToAttack);//TODO DEBUG
+
         return chomperState;
       }
     }

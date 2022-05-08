@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
+import busquedapvz.utils.MapManager;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import lombok.AllArgsConstructor;
@@ -143,12 +144,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	@Override
 	public SearchBasedAgentState clone() {
 		
-		Cell newWorld[][] = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
-		for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
-        	for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
-        		newWorld[i][j] = knownWorld[i][j].clone();
-            }
-        }
+		Cell newWorld[][] = MapManager.copyOf(knownWorld);
 		ChomperAgentState ret = new ChomperAgentState(newWorld, Integer.valueOf(energy),
 				Integer.valueOf(zombiesAmount), new Position(position.getX(), position.getY()), new Position(lastPos.getX(), lastPos.getY()), 
 				Boolean.valueOf(obChanged), celdasVisitadas);

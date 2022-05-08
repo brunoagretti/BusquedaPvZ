@@ -9,9 +9,9 @@ public class RandomHandler {
 		Random r = new Random();
 		
 		switch (type){
-		case ZombieAmount:
-			// Must be between 5 and 20 
-			n = r.nextInt(3) + 1;
+		case TotalZombiesToSpawn:
+			// Must be between 5 and 20 TODO
+			n = 2;
 			break;
 			
 		case ZombieSpawns:

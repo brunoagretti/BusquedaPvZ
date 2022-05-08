@@ -1,6 +1,8 @@
 package busquedapvz;
 
 import java.util.Arrays;
+
+import busquedapvz.utils.MapManager;
 import frsf.cidisi.faia.state.EnvironmentState;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,19 +14,23 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PvzEnvironmentState extends EnvironmentState {
+public class PvzEnvironmentState extends EnvironmentState implements Cloneable {
+
+	Cell world[][];
+	Position chomperPosition;
+	Integer chomperEnergy;
 	
-	 Cell world[][];
-	 Position chomperPosition;
-	 Integer chomperEnergy;
-	 Integer zombiesAmount;//Zombies that will be added
-	 Integer spawnedZombies;
+	// Zombies that have to be killed for the simulation to end
+	Integer remainingZombiesAmount;
 	
+	// Zombies that have not been added to the map yet
+	Integer zombiesLeftToSpawn;
+
 	Boolean agentFailed = false;
-	
+
 	public PvzEnvironmentState(Cell[][] world) {
-        this.world = world;
-        this.initState();
+		this.world = world;
+		this.initState();
     }
 
     public PvzEnvironmentState() {
@@ -36,8 +42,8 @@ public class PvzEnvironmentState extends EnvironmentState {
 	public void initState() {
 		
 		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); 
-		zombiesAmount = RandomHandler.nextInt(RandomType.ZombieAmount);
-		spawnedZombies=0;
+		remainingZombiesAmount = RandomHandler.nextInt(RandomType.TotalZombiesToSpawn);
+		zombiesLeftToSpawn=Integer.valueOf(remainingZombiesAmount);
 		
 		chomperPosition = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));
 		world[0][chomperPosition.getY()].setContainsAgent(true);
@@ -125,11 +131,11 @@ public class PvzEnvironmentState extends EnvironmentState {
 	}
 
 	public void decrementZombiesAmount(Integer amount) {
-		zombiesAmount -= amount;
+		remainingZombiesAmount -= amount;
 	}
 	
-	public void addSpawnedZombies(Integer amount) {
-		spawnedZombies += amount;
+	public void decrementZombiesToSpawn(Integer amount) {
+		zombiesLeftToSpawn -= amount;
 	}
 
     public void decrementChomperEnergy(Integer amount) {
@@ -140,7 +146,11 @@ public class PvzEnvironmentState extends EnvironmentState {
     	
         this.chomperEnergy += amount;
     }
-
-	
+    
+    @Override
+	public PvzEnvironmentState clone() {
+    	PvzEnvironmentState newState = new PvzEnvironmentState(MapManager.copyOf(world), chomperPosition.clone(), Integer.valueOf(chomperEnergy), Integer.valueOf(remainingZombiesAmount), Integer.valueOf(remainingZombiesAmount), Boolean.valueOf(agentFailed));
+    	return newState;
+	}
 
 }

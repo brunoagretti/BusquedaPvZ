@@ -1,5 +1,5 @@
 package busquedapvz;
 
 public enum RandomType {
-	ZombieSpawns, StartingAgentEnergy, SunSpawns, ZombieWalk, ZombieAmount, ZombiePosition, ZombieHp, AgentPosition;
+	ZombieSpawns, StartingAgentEnergy, SunSpawns, ZombieWalk, ZombiePosition, ZombieHp, AgentPosition, TotalZombiesToSpawn;
 }

@@ -16,5 +16,15 @@ public class MapManager {
 	      }
 	      return world;
 	    }
+	  
+	  public static Cell[][] copyOf(Cell[][] world){
+			Cell newWorld[][] = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+			for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
+	        	for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
+	        		newWorld[i][j] = world[i][j].clone();
+	            }
+	        }
+			return newWorld;
+	  }
 	
 }

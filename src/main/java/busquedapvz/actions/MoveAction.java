@@ -54,8 +54,8 @@ public interface MoveAction {
 	    PvzEnvironmentState environmentState = (PvzEnvironmentState) est;
 	    ChomperAgentState chomperState = ((ChomperAgentState) ast);
 	    
-	    Integer chomperX = chomperState.getPosition().getX();
-	    Integer chomperY = chomperState.getPosition().getY();
+	    Integer chomperX = environmentState.getChomperPosition().getX();
+	    Integer chomperY = environmentState.getChomperPosition().getY();
 	    //If coordinate is out of bound, return invalid action
 	    Boolean invalidXCoord = posToMove.getX()<0 || posToMove.getX()>PvzEnvironment.MAP_SIZE_X-1;
 	    Boolean invalidYCoord = posToMove.getY()<0 || posToMove.getY()>PvzEnvironment.MAP_SIZE_Y-1;

@@ -14,7 +14,7 @@ public class Main {
 
     PvzEnvironment chomperEnvironment = new PvzEnvironment();
     
-    ChomperAgent chomperAgent = new ChomperAgent(chomperEnvironment.getEnvironmentState().getZombiesAmount());
+    ChomperAgent chomperAgent = new ChomperAgent(chomperEnvironment.getEnvironmentState().getRemainingZombiesAmount());
     
     ChomperSimulator simulator =
             new ChomperSimulator(chomperEnvironment, chomperAgent);

@@ -1,43 +1,38 @@
 package busquedapvz.graphics;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.plaf.basic.BasicSplitPaneUI.BasicVerticalLayoutManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
-
 import busquedapvz.Cell;
-import busquedapvz.EmptyCell;
-import busquedapvz.Position;
 import busquedapvz.PvzEnvironment;
 import busquedapvz.PvzEnvironmentState;
 import busquedapvz.SunflowerCell;
 import busquedapvz.ZombieCell;
+import busquedapvz.utils.MapManager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,12 +58,17 @@ public class PvzFrame extends JFrame {
 
 	// Table and data definition
 	JLabel labelHead = new JLabel("Agente Inteligente - Plants Vs Zombies");
+	JLabel labelTime = new JLabel("Ciclo: ");
 	JLabel labelEnergy = new JLabel("Entergia del agente: ");
 	JLabel labelZombies = new JLabel("Zombies restantes: ");
 	DefaultTableModel model = new DefaultTableModel(5, 9);
 	Object[][] tableData = new Object[5][9];
 	String[] columnnames = {"", "", "", "", "", "", "", "", ""};
 
+	//Simulation States
+	List<PvzEnvironmentState> states = new ArrayList<>();
+	Integer currentStateIndex = 0;
+	
 	JTable table = new JTable(model) {
 		public Class<?> getColumnClass(int column) {
 			return ImageIcon.class;
@@ -86,20 +86,21 @@ public class PvzFrame extends JFrame {
 			return c;
 		}
 		
-//		public void paintComponent(Graphics graphics) {
-//			graphics.drawImage(backgroundImage, 0, 0, this);
-//			super.paintComponent(graphics);
-//		}
 	};
 	JPanel topPanel = new JPanel();
 	JPanel centerPanel = new JPanel();
-	JPanel bottomPanel = new JPanel();
+	JPanel infoPanel = new JPanel();
+	JPanel buttonsPanel = new JPanel();
+	JButton nextFrameBtn = new JButton("Siguiente");
+	JButton previousFrameBtn = new JButton("Anterior");
 
 	public PvzFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Plants Vs Zombies - Simulator");
 		tableData = getEmptyImageArray();
 		loadImages();
+		GridBagLayout layout = new GridBagLayout();
+		setLayout(layout);
 		
         //data for JTable in a 2D table
         model.setDataVector(tableData, columnnames);
@@ -113,7 +114,7 @@ public class PvzFrame extends JFrame {
             @Override public void tableChanged(final TableModelEvent e) {
                 EventQueue.invokeLater(new Runnable() {
                     @Override public void run() {
-                        table.setRowHeight(e.getFirstRow(), 100); //replace 15 with your own height
+                        table.setRowHeight(e.getFirstRow(), 100);
                     }
                 });
             }
@@ -122,6 +123,21 @@ public class PvzFrame extends JFrame {
 			table.getColumnModel().getColumn(i).setMinWidth(100);
 		}
 
+		setUpLayout(layout);
+		
+		PvzEnvironmentState emptyState = new PvzEnvironmentState(MapManager.createEmptyWorld(), null, 0, 0, 0, false);
+		states.add(emptyState);
+		currentStateIndex=0;
+		
+		setUpButtons();
+		setButtonsVisible(false);
+		
+		setSize(screenWidth, screenHeight);
+		setVisible(true);
+		this.pack();
+	}
+
+	private void setUpLayout(GridBagLayout layout) {
 		labelHead.setFont(new Font("Arial", Font.TRUETYPE_FONT, 20));
 		topPanel.add(labelHead);
 		topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -130,29 +146,62 @@ public class PvzFrame extends JFrame {
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         centerPanel.setSize(1000, 600);
         
+        labelTime.setFont(new Font("Arial", Font.TRUETYPE_FONT, 20));
 		labelEnergy.setFont(new Font("Arial", Font.TRUETYPE_FONT, 20));
 		labelZombies.setFont(new Font("Arial", Font.TRUETYPE_FONT, 20));
-		bottomPanel.add(labelEnergy);
-		bottomPanel.add(labelZombies);
-		bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-       
-
-		setSize(screenWidth, screenHeight);
+		infoPanel.setLayout(new GridLayout(2, 1));
+		infoPanel.add(labelTime);
+		infoPanel.add(labelEnergy);
+		infoPanel.add(labelZombies);
+		infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		buttonsPanel.add(previousFrameBtn);
+		buttonsPanel.add(nextFrameBtn);
 		
-		add(topPanel, BorderLayout.PAGE_START);
-		add(centerPanel, BorderLayout.CENTER);
-		add(bottomPanel,BorderLayout.PAGE_END);
-		
-		setVisible(true);
-		this.pack();
+		add(topPanel);
+		add(centerPanel);
+		add(infoPanel);
+		add(buttonsPanel);
+		GridBagConstraints c1 = new GridBagConstraints();
+		c1.gridy=0;
+		c1.gridx=0;
+		c1.gridheight=1;
+		c1.gridwidth=2;
+		GridBagConstraints c2 = new GridBagConstraints();
+		c2.gridy=1;
+		c2.gridx=0;
+		c2.gridheight=2;
+		c2.gridwidth=2;
+		GridBagConstraints c3 = new GridBagConstraints();
+		c3.gridy=3;
+		c3.gridx=0;
+		c3.gridheight=1;
+		c3.gridwidth=2;
+		GridBagConstraints c4 = new GridBagConstraints();
+		c4.gridy=4;
+		c4.gridx=0;
+		c4.gridheight=1;
+		c4.gridwidth=2;
+		layout.setConstraints(topPanel,c1);
+		layout.setConstraints(centerPanel, c2);
+		layout.setConstraints(infoPanel, c3);
+		layout.setConstraints(buttonsPanel, c4);
 	}
 	
 	public PvzFrame(PvzEnvironmentState state) {
 		this();
-		drawTable(state);
+		addNewState(state);
 	}
 	
-	public void drawTable(PvzEnvironmentState state) {
+	public void addNewState(PvzEnvironmentState state) {
+		PvzEnvironmentState newState = state.clone();
+		drawTable(newState);
+
+		this.currentStateIndex += 1;
+		labelTime.setText("Ciclo: " + currentStateIndex);
+		this.states.add(newState);
+	}
+	
+	private void drawTable(PvzEnvironmentState state) {
 		Cell[][] map = state.getWorld();
 		for (Integer i = 0; i < COLS; i++) {
 			for (Integer j = 0; j < ROWS; j++) {
@@ -160,16 +209,16 @@ public class PvzFrame extends JFrame {
 			}
 		}
 		labelEnergy.setText("Entergia del agente: " + state.getChomperEnergy());
-		labelZombies.setText("Zombies restantes: " + state.getZombiesAmount());
+		labelZombies.setText("Zombies restantes: " + state.getRemainingZombiesAmount());
 		
-		if(state.getAgentFailed()) {
-			JOptionPane.showMessageDialog(this,
-				    "El agente ha fallado",
-				    "Simulador Finalizado",
-				    JOptionPane.ERROR_MESSAGE);
-		}
+//		if(state.getAgentFailed()) {
+//			JOptionPane.showMessageDialog(this,
+//				    "El agente ha fallado",
+//				    "Simulador Finalizado",
+//				    JOptionPane.ERROR_MESSAGE);
+//		}
 	}
-	
+
 	private Object[][] getEmptyImageArray() {
 		Object[][] tableData = new Object[COLS][ROWS];
 		for (Integer i = 0; i < COLS; i++) {
@@ -233,4 +282,29 @@ public class PvzFrame extends JFrame {
 		}
 	}
 	
+	public void setButtonsVisible(boolean visible) {
+		if(visible) {
+			buttonsPanel.setVisible(true);
+		}else {
+			buttonsPanel.setVisible(false);
+		}
+		pack();
+	}
+	
+	private void setUpButtons() {
+		nextFrameBtn.addActionListener(e->{
+			if(currentStateIndex<states.size()-1) {
+				currentStateIndex +=1;
+				labelTime.setText("Ciclo: " + currentStateIndex);
+				drawTable(states.get(currentStateIndex));
+			}
+		});
+		previousFrameBtn.addActionListener(e->{
+			if(currentStateIndex>0) {
+				currentStateIndex -=1;
+				labelTime.setText("Ciclo: " + currentStateIndex);
+				drawTable(states.get(currentStateIndex));
+			}
+		});
+	}
 }
