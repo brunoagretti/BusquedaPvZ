@@ -11,7 +11,7 @@ public class RandomHandler {
 		switch (type){
 		case TotalZombiesToSpawn:
 			// Must be between 5 and 20 TODO
-			n = 2;
+			n = 3;
 			break;
 			
 		case ZombieSpawns:

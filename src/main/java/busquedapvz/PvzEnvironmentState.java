@@ -1,6 +1,8 @@
 package busquedapvz;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import busquedapvz.utils.MapManager;
 import frsf.cidisi.faia.state.EnvironmentState;
@@ -19,6 +21,7 @@ public class PvzEnvironmentState extends EnvironmentState implements Cloneable {
 	Cell world[][];
 	Position chomperPosition;
 	Integer chomperEnergy;
+
 	
 	// Zombies that have to be killed for the simulation to end
 	Integer remainingZombiesAmount;
@@ -27,13 +30,16 @@ public class PvzEnvironmentState extends EnvironmentState implements Cloneable {
 	Integer zombiesLeftToSpawn;
 
 	Boolean agentFailed = false;
+	HashSet<ZombieCell> zombiesOnMap;
 
 	public PvzEnvironmentState(Cell[][] world) {
+		zombiesOnMap = new HashSet<ZombieCell>();
 		this.world = world;
 		this.initState();
     }
 
     public PvzEnvironmentState() {
+		zombiesOnMap = new HashSet<ZombieCell>();
         initWorld();
         this.initState();
     }
@@ -149,8 +155,50 @@ public class PvzEnvironmentState extends EnvironmentState implements Cloneable {
     
     @Override
 	public PvzEnvironmentState clone() {
-    	PvzEnvironmentState newState = new PvzEnvironmentState(MapManager.copyOf(world), chomperPosition.clone(), Integer.valueOf(chomperEnergy), Integer.valueOf(remainingZombiesAmount), Integer.valueOf(remainingZombiesAmount), Boolean.valueOf(agentFailed));
+    	PvzEnvironmentState newState = new PvzEnvironmentState(MapManager.copyOf(world), 
+    			chomperPosition.clone(), Integer.valueOf(chomperEnergy), Integer.valueOf(remainingZombiesAmount), 
+    			Integer.valueOf(remainingZombiesAmount), Boolean.valueOf(agentFailed), (HashSet<ZombieCell>) zombiesOnMap.clone());
     	return newState;
+	}
+
+	public void walkZombies() {
+		Integer n;
+		for (ZombieCell zombie : zombiesOnMap) {
+			n = RandomHandler.nextInt(RandomType.ZombieWalk);
+			// If there is a plant on the new position of the zombie it will be deleted with
+			// all its suns
+			if (n <= zombie.getWalkChance()) {
+				Position newPos = zombie.getPosition().clone();
+				newPos.decrementX();
+				
+				if (newPos.getX() < 0) {
+					setAgentFailed(true);
+					getWorld()[zombie.getPosition().getX()][zombie.getPosition()
+							.getY()] = new EmptyCell(zombie.getPosition(), false);
+				} else {
+					if (!zombieOnPosition(newPos)) {
+						zombie.setContainsAgent(getWorld()[newPos.getX()][newPos.getY()].containsAgent());
+						moveZombie(zombie.getPosition(), newPos);
+						
+						//Resta energía del agente
+						if(zombie.containsAgent()) {
+							decrementChomperEnergy(2*zombie.getHp());
+						}
+						
+						zombie.setWalkChance(34);
+					}
+				}
+			}
+
+			else {
+				zombie.setWalkChance(zombie.getWalkChance() + 33);
+			}
+
+		}
+	}
+	
+	public void moveZombie(Position oldPos, Position newPos) {
+		updatePosition(oldPos, newPos);
 	}
 
 }

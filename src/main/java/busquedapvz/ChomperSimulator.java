@@ -85,10 +85,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println("Asking the agent for an action...");
             action = agent.selectAction();
 
-            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
-            	System.out.println("CAMBIO DE OBJETIVO");
-            	((ChomperAgent) agent).changeObjective();
-            }
+        
             
 
             if (action == null) {
@@ -99,6 +96,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println();
             
             this.actionReturned(agent, action);
+            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
+            	System.out.println("CAMBIO DE OBJETIVO");
+            	((ChomperAgent) agent).changeObjective();
+            }
             
 //            try {
 //				Thread.sleep(1500);
@@ -109,7 +110,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             
         } while (!this.agentSucceeded(action) && !this.agentFailed(action));
-
+        game.addNewState(environment.getEnvironmentState());
         //Mostrar botones de control
         game.setButtonsVisible(true);
         

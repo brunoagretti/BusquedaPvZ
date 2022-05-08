@@ -173,6 +173,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		return true;
 	}
 	
+	
 	public boolean noZombiesOnMap() {
 		for (int i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
 			for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {

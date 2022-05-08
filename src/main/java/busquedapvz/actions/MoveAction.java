@@ -81,18 +81,18 @@ public interface MoveAction {
 	    	}
 	    	
 	    	else {
-	    		if(cellToMove instanceof ZombieCell) {
-	    			chomperState.decrementEnergy(((ZombieCell) cellToMove).getHp()*2);
+	    		if(cellToMoveEnvironment instanceof ZombieCell) {
+	    			chomperState.decrementEnergy(((ZombieCell) cellToMoveEnvironment).getHp()*2);
 	    			environmentState.decrementChomperEnergy(((ZombieCell) cellToMoveEnvironment).getHp()*2);
 		    	}
 	    	}
 	    	
 	    	
-	    	chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
+	    	//chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
 	    	environmentState.getWorld()[chomperX][chomperY].setContainsAgent(false);
-	    	chomperState.setPosition(posToMove.clone());
+	    	//chomperState.setPosition(posToMove.clone());
 	    	environmentState.setChomperPosition(posToMove.clone());
-	    	cellToMove.setContainsAgent(true);
+	    	//cellToMove.setContainsAgent(true);
 	    	cellToMoveEnvironment.setContainsAgent(true);
 	    	chomperState.increaseCeldasVisitadas(1);
 	    	

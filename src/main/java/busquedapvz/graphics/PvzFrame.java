@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -59,7 +60,7 @@ public class PvzFrame extends JFrame {
 	// Table and data definition
 	JLabel labelHead = new JLabel("Agente Inteligente - Plants Vs Zombies");
 	JLabel labelTime = new JLabel("Ciclo: ");
-	JLabel labelEnergy = new JLabel("Entergia del agente: ");
+	JLabel labelEnergy = new JLabel("Energia del agente: ");
 	JLabel labelZombies = new JLabel("Zombies restantes: ");
 	DefaultTableModel model = new DefaultTableModel(5, 9);
 	Object[][] tableData = new Object[5][9];
@@ -125,7 +126,7 @@ public class PvzFrame extends JFrame {
 
 		setUpLayout(layout);
 		
-		PvzEnvironmentState emptyState = new PvzEnvironmentState(MapManager.createEmptyWorld(), null, 0, 0, 0, false);
+		PvzEnvironmentState emptyState = new PvzEnvironmentState(MapManager.createEmptyWorld(), null, 0, 0, 0, false, new HashSet<ZombieCell>());
 		states.add(emptyState);
 		currentStateIndex=0;
 		
@@ -208,7 +209,7 @@ public class PvzFrame extends JFrame {
 				table.getModel().setValueAt(generateTileImage(map[i][j]), j, i);
 			}
 		}
-		labelEnergy.setText("Entergia del agente: " + state.getChomperEnergy());
+		labelEnergy.setText("Energia del agente: " + state.getChomperEnergy());
 		labelZombies.setText("Zombies restantes: " + state.getRemainingZombiesAmount());
 		
 //		if(state.getAgentFailed()) {

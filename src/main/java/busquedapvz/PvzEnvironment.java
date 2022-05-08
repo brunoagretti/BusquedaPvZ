@@ -15,10 +15,9 @@ public class PvzEnvironment extends Environment {
 
 	public static final Integer MAP_SIZE_X = 9;
 	public static final Integer MAP_SIZE_Y = 5;
-	Set<ZombieCell> zombiesOnMap;
+
 
 	public PvzEnvironment() {
-		zombiesOnMap = new HashSet<ZombieCell>();
 		this.environmentState = new PvzEnvironmentState();
 	}
 
@@ -106,7 +105,7 @@ public class PvzEnvironment extends Environment {
 				ZombieCell zombieToAdd = new ZombieCell(new Position(MAP_SIZE_X - 1, posY), false,
 						RandomHandler.nextInt(RandomType.ZombieHp), 34);
 				state.getWorld()[MAP_SIZE_X - 1][posY] = zombieToAdd;
-				zombiesOnMap.add(zombieToAdd);
+				state.getZombiesOnMap().add(zombieToAdd);
 				spawningZombies--;
 				state.decrementZombiesToSpawn(1);
 			}
@@ -116,48 +115,13 @@ public class PvzEnvironment extends Environment {
 	// Fires the chance of zombies walking 1 step.
 	public void walkZombies() {
 		// Check for each zombie on list
-		Integer n;
-		for (ZombieCell zombie : zombiesOnMap) {
-			n = RandomHandler.nextInt(RandomType.ZombieWalk);
-			// If there is a plant on the new position of the zombie it will be deleted with
-			// all its suns
-			if (n <= zombie.getWalkChance()) {
-				Position newPos = zombie.getPosition().clone();
-				newPos.decrementX();
-				
-				if (newPos.getX() < 0) {
-					getEnvironmentState().setAgentFailed(true);
-					getEnvironmentState().getWorld()[zombie.getPosition().getX()][zombie.getPosition()
-							.getY()] = new EmptyCell(zombie.getPosition(), false);
-				} else {
-					if (!((PvzEnvironmentState) this.environmentState).zombieOnPosition(newPos)) {
-						zombie.setContainsAgent(getEnvironmentState().getWorld()[newPos.getX()][newPos.getY()].containsAgent());
-						moveZombie(zombie.getPosition(), newPos);
-						
-						//Resta energía del agente
-						if(zombie.containsAgent()) {
-							getEnvironmentState().decrementChomperEnergy(2*zombie.getHp());
-						}
-						
-						zombie.setWalkChance(34);
-					}
-				}
-			}
+		
+		getEnvironmentState().walkZombies();
 
-			else {
-				zombie.setWalkChance(zombie.getWalkChance() + 33);
-			}
-
-		}
 	}
 
-	public void moveZombie(Position oldPos, Position newPos) {
-		((PvzEnvironmentState) this.environmentState).updatePosition(oldPos, newPos);
-	}
 
-	public Set<ZombieCell> getZombiesOnMap() {
-		return zombiesOnMap;
-	}
+
 
 	@Override
 	public boolean agentFailed(Action actionReturned) {
@@ -169,4 +133,5 @@ public class PvzEnvironment extends Environment {
 	public String toString() {
 		return getEnvironmentState().toString();
 	}
+	
 }

@@ -1,4 +1,4 @@
-package busquedapvz;
+	package busquedapvz;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -55,7 +55,7 @@ public interface AttackAction {
       return null;
     }
     
-    Cell cellToAttack = chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()];
+    Cell cellToAttack = environmentState.getWorld()[posToAttack.getX()][posToAttack.getY()];
         
     /**
      * Preconditions: there is a zombie where we want to attack and we have enough energy
@@ -66,12 +66,13 @@ public interface AttackAction {
       Integer zombieHp = ((ZombieCell) cellToAttack).getHp();
       if(zombieHp<chomperState.getEnergy()) {
         
-        environmentState.getWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(posToAttack.clone(), false);
+        environmentState.getWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(new Position(posToAttack.getX(), posToAttack.getY()), false);
         environmentState.decrementChomperEnergy(zombieHp);
         environmentState.decrementZombiesAmount(1);
-        chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(posToAttack.clone(), false);
+        chomperState.getKnownWorld()[posToAttack.getX()][posToAttack.getY()] = new EmptyCell(new Position(posToAttack.getX(), posToAttack.getY()), false);
         chomperState.decrementEnergy(zombieHp);
         chomperState.decrementZombiesAmount(1);
+        environmentState.getZombiesOnMap().remove(cellToAttack);
         return environmentState;
       }
     }
