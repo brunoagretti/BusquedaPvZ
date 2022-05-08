@@ -37,7 +37,7 @@ public interface MoveAction {
 	    	}
 	    	
 	    	chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
-	    	chomperState.setPosition(posToMove.clone());
+	    	chomperState.setPosition(new Position(posToMove.getX(), posToMove.getY()));
 	    	
 	    	cellToMove.setContainsAgent(true);
 	    	chomperState.increaseCeldasVisitadas(1);
