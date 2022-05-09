@@ -41,6 +41,7 @@ public class RandomHandler {
 		
 		case AgentPosition:
 			n = r.nextInt(5);
+//			n=4;
 			break;
 			
 			

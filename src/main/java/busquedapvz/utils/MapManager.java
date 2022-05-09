@@ -7,24 +7,36 @@ import busquedapvz.PvzEnvironment;
 
 public class MapManager {
 
-	  public static Cell[][] createEmptyWorld(){
-		  Cell[][] world = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
-	      for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
-	        for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
-	          world[i][j] = new EmptyCell(new Position(i,j),false);
-	        }
-	      }
-	      return world;
-	    }
-	  
-	  public static Cell[][] copyOf(Cell[][] world){
-			Cell newWorld[][] = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
-			for(int i=0; i<PvzEnvironment.MAP_SIZE_X; i++) {
-	        	for(int j=0; j<PvzEnvironment.MAP_SIZE_Y; j++) {
-	        		newWorld[i][j] = world[i][j].clone();
-	            }
-	        }
-			return newWorld;
-	  }
-	
+	public static Cell[][] createEmptyWorld() {
+		Cell[][] world = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+		for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+			for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+				world[i][j] = new EmptyCell(new Position(i, j), false);
+			}
+		}
+		return world;
+	}
+
+	public static Cell[][] copyOf(Cell[][] world) {
+		Cell newWorld[][] = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
+		for (int i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+			for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+				newWorld[i][j] = world[i][j].clone();
+			}
+		}
+		return newWorld;
+	}
+
+	public static boolean isWorldEqual(Cell[][] world1, Cell[][] world2) {
+		for (int i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
+			for (int j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
+				if (!world1[i][j].equals(world2[i][j])) {
+					return false;
+				}
+			}
+		}
+		return true;
+
+	}
+
 }

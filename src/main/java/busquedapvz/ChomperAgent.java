@@ -30,7 +30,7 @@ public class ChomperAgent extends SearchBasedAgent {
 	private Vector<SearchAction> operators;
 	public ChomperAgent(Integer zombiesAmount) {
 		// The Chomper Goal
-        EnergyGatheringGoal goal = new EnergyGatheringGoal();
+        SunflowerGoal goal = new SunflowerGoal();
 
         // The Chomper Agent State
         ChomperAgentState ChomperState = new ChomperAgentState(zombiesAmount);
@@ -42,11 +42,11 @@ public class ChomperAgent extends SearchBasedAgent {
         operators.addElement(new AttackUp());
         operators.addElement(new AttackLeft());
         operators.addElement(new AttackRight());
-        operators.addElement(new PlantSunflower());
         operators.addElement(new GoRight());
-        operators.addElement(new GoLeft());
         operators.addElement(new GoUp());
         operators.addElement(new GoDown());
+        operators.addElement(new GoLeft());
+        operators.addElement(new PlantSunflower());
         // Create the Problem which the Chomper will resolve
         Problem problem = new Problem(goal, ChomperState, operators);
         this.setProblem(problem);
@@ -62,14 +62,15 @@ public class ChomperAgent extends SearchBasedAgent {
 		// Create the search strategy
 		Strategy strategy;
 		ChomperAgentState state = (ChomperAgentState) getAgentState();
-		if (!state.getObChanged())
+		IStepCostFunction costFunction = new CostFunction();
+		if (!state.getObChanged()) {
 			strategy = new BreathFirstSearch();
+//		 strategy = new UniformCostSearch(costFunction);
 //		 strategy = new DepthFirstSearch();
-		else {
+		}else {
 			strategy = new BreathFirstSearch();
 //			 strategy = new DepthFirstSearch();
-			// IStepCostFunction costFunction = new CostFunction();
-			// strategy = new UniformCostSearch(costFunction);
+//			 strategy = new UniformCostSearch(costFunction);
 		}
 
 		/**
@@ -99,7 +100,7 @@ public class ChomperAgent extends SearchBasedAgent {
 		 * Generate an XML file with the search tree. It can also be generated
 		 * in other formats like PDF with PDF_TREE
 		 */
-		searchSolver.setVisibleTree(Search.WHITHOUT_TREE);
+		searchSolver.setVisibleTree(Search.EFAIA_TREE);
 
 		// Set the Search searchSolver.
       this.setSolver(searchSolver);

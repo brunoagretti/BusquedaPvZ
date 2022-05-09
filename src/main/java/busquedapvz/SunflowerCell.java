@@ -41,7 +41,7 @@ public class SunflowerCell extends Cell{
       
       @Override
       public boolean equals(Object obj) {
-      	return super.equals(obj) && (obj instanceof SunflowerCell);
+      	return super.equals(obj) && (obj instanceof SunflowerCell)/*&& ((SunflowerCell) obj).getSunQuantity().equals(sunQuantity)*/;
       }
 
     }

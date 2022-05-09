@@ -51,7 +51,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		PvzFrame game = new PvzFrame(environment.getEnvironmentState());
 		game.setResizable(true);
 
-		EnergyGatheringGoal energyGatheringGoal = new EnergyGatheringGoal();
+		SunflowerGoal energyGatheringGoal = new SunflowerGoal();
 		
         do {
         	
@@ -66,6 +66,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             // After agent executes his action we should see if zombies Walk
             environment.walkZombies();
+            if(environment.getEnvironmentState().getAgentFailed()) {
+            	action=null;
+            	break;
+            }
             
             perception = this.getPercept();
             agent.see(perception);

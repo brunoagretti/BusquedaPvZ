@@ -30,7 +30,7 @@ public class PlantSunflower extends SearchAction{
 
 	@Override
 	public Double getCost() {
-		return Double.valueOf(1.0);
+		return Double.valueOf(3.0);
 	}
 
 	@Override

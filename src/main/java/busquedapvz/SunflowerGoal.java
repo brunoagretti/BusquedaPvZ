@@ -3,7 +3,7 @@ package busquedapvz;
 import frsf.cidisi.faia.agent.search.GoalTest;
 import frsf.cidisi.faia.state.AgentState;
 
-public class EnergyGatheringGoal extends GoalTest {
+public class SunflowerGoal extends GoalTest {
 	@Override
 	public boolean isGoalState(AgentState agentState) {
 		ChomperAgentState chomperState = (ChomperAgentState) agentState;

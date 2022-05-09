@@ -10,7 +10,6 @@ public class CostFunction implements IStepCostFunction {
      */
     @Override
     public double calculateCost(NTree node) {
-    	System.out.println("AJA");
         return ((ChomperAgentState) node.getAgentState()).getCeldasVisitadas();
     }
 }

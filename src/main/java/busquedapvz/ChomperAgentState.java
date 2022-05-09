@@ -133,8 +133,8 @@ public class ChomperAgentState extends SearchBasedAgentState {
 			ChomperAgentState state = (ChomperAgentState) obj;
 			//System.out.println("Energia: " + (state.getEnergy() == this.energy) + ", Zombies: " + (state.getZombiesAmount() == this.zombiesAmount)  
 			//		+ ", Mapa: " + Arrays.deepEquals(state.getKnownWorld(), knownWorld));
-			if (state.getEnergy() == this.energy && state.getZombiesAmount() == this.zombiesAmount
-				 && Arrays.deepEquals(state.getKnownWorld(), knownWorld) && state.position.equals(this.position)) {
+			if (/*state.getEnergy() == this.energy &&*/ state.getZombiesAmount() == this.zombiesAmount
+				 && MapManager.isWorldEqual(state.getKnownWorld(), knownWorld) && state.position.equals(this.position)) {
 				isEqual = true;
 			}
 		}
