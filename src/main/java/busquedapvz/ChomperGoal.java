@@ -4,22 +4,15 @@ import frsf.cidisi.faia.agent.search.GoalTest;
 import frsf.cidisi.faia.state.AgentState;
 
 public class ChomperGoal extends GoalTest{
-	Integer goal;
-	
-	public ChomperGoal(Integer goal) {
-		this.goal = goal;
-	}
 
 	@Override
 	public boolean isGoalState(AgentState agentState) {
 		ChomperAgentState chomperState = (ChomperAgentState) agentState;
-		if (goal == 2 && chomperState.noZombiesOnMap()) {
+		if (chomperState.noZombiesOnMap() /*&& chomperState.allRowsVisited()*/) {
 			return true;
-		}
-		if (goal == 1 && chomperState.sunflowersPlaced()) {
-			return true;
-		} else
+		}else {
 			return false;
+		}
 	}
 
 }

@@ -46,6 +46,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
         agent = (ChomperAgent) this.getAgents().firstElement();
         ChomperAgentState state = (ChomperAgentState) agent.getAgentState();
+        
+        //Set the agent its position
+        state.initData(environment.getEnvironmentState().getChomperPosition(), environment.getEnvironmentState().getChomperEnergy());
+        
         System.out.println("The generated amount of zombies in the simulation is: " + environment.getEnvironmentState().getRemainingZombiesAmount()); 
        
 		PvzFrame game = new PvzFrame(environment.getEnvironmentState());
@@ -78,6 +82,14 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println("Agent State: " + agent.getAgentState());
             System.out.println("Environment:\n" + environment);
             
+            //TODO
+            
+            System.out.println();
+    		for(int i = 0 ;i<state.visitedRows.length;i++) {
+    			System.out.print(" " + state.visitedRows[i]);
+    		}
+    		System.out.println();
+    		
             if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
             	System.out.println("CAMBIO DE OBJETIVO");
             	((ChomperAgent) agent).changeObjective();
@@ -104,14 +116,6 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             	System.out.println("CAMBIO DE OBJETIVO");
             	((ChomperAgent) agent).changeObjective();
             }
-            
-//            try {
-//				Thread.sleep(1500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}  
-
             
         } while (!this.agentSucceeded(action) && !this.agentFailed(action));
         game.addNewState(environment.getEnvironmentState());
