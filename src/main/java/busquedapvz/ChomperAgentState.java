@@ -29,6 +29,17 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		this.zombiesAmount = zombiesAmount;
 		initState();
 	}
+	
+	public void initData(Position pos, Integer energy) {
+		this.setPosition(pos);
+		this.energy=energy;
+		
+		if (position.getY() > 0)
+			lastPos = new Position(0, 0);
+		else
+			lastPos = new Position(0, 4);
+		knownWorld[0][position.getY()].setContainsAgent(true);
+	}
 
 	@Override
 	public void updateState(Perception p) {
@@ -118,13 +129,6 @@ public class ChomperAgentState extends SearchBasedAgentState {
         }
       }
 	  
-		energy = RandomHandler.nextInt(RandomType.StartingAgentEnergy);
-		position = new Position(0, RandomHandler.nextInt(RandomType.AgentPosition));
-		if(position.getY() > 0 )
-			lastPos = new Position(0, 0);
-		else 
-			lastPos = new Position(0,4);
-		knownWorld[0][position.getY()].setContainsAgent(true);
 		
 	      for (Integer i = 0; i < PvzEnvironment.MAP_SIZE_X; i++) {
 	          for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {

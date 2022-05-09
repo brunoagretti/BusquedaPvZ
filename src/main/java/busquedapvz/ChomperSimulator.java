@@ -46,6 +46,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
         agent = (ChomperAgent) this.getAgents().firstElement();
         ChomperAgentState state = (ChomperAgentState) agent.getAgentState();
+        
+        //Set the agent its position
+        state.initData(environment.getEnvironmentState().getChomperPosition(), environment.getEnvironmentState().getChomperEnergy());
+        
         System.out.println("The generated amount of zombies in the simulation is: " + environment.getEnvironmentState().getRemainingZombiesAmount()); 
        
 		PvzFrame game = new PvzFrame(environment.getEnvironmentState());
