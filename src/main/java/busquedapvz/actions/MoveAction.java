@@ -88,11 +88,11 @@ public interface MoveAction {
 	    	}
 	    	
 	    	
-	    	//chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
+	    	chomperState.getKnownWorld()[chomperX][chomperY].setContainsAgent(false);
 	    	environmentState.getWorld()[chomperX][chomperY].setContainsAgent(false);
-	    	//chomperState.setPosition(posToMove.clone());
+	    	chomperState.setPosition(posToMove.clone());
 	    	environmentState.setChomperPosition(posToMove.clone());
-	    	//cellToMove.setContainsAgent(true);
+	    	cellToMove.setContainsAgent(true);
 	    	cellToMoveEnvironment.setContainsAgent(true);
 	    	chomperState.increaseCeldasVisitadas(1);
 	    	
