@@ -55,7 +55,7 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		PvzFrame game = new PvzFrame(environment.getEnvironmentState());
 		game.setResizable(true);
 
-		SunflowerGoal energyGatheringGoal = new SunflowerGoal();
+//		ChomperGoal goal = new ChomperGoal();
 		
         do {
         	
@@ -82,10 +82,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println("Agent State: " + agent.getAgentState());
             System.out.println("Environment:\n" + environment);
             
-            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
-            	System.out.println("CAMBIO DE OBJETIVO");
-            	((ChomperAgent) agent).changeObjective();
-            }
+//            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
+//            	System.out.println("CAMBIO DE OBJETIVO");
+//            	((ChomperAgent) agent).changeObjective();
+//            }
 
             //Draw map
             game.addNewState(environment.getEnvironmentState());
@@ -104,10 +104,10 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println();
             
             this.actionReturned(agent, action);
-            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
-            	System.out.println("CAMBIO DE OBJETIVO");
-            	((ChomperAgent) agent).changeObjective();
-            }
+//            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
+//            	System.out.println("CAMBIO DE OBJETIVO");
+//            	((ChomperAgent) agent).changeObjective();
+//            }
             
 //            try {
 //				Thread.sleep(1500);

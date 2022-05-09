@@ -32,7 +32,7 @@ public class ChomperAgent extends SearchBasedAgent {
 	private Vector<SearchAction> operators;
 	public ChomperAgent(Integer zombiesAmount) {
 		// The Chomper Goal
-        SunflowerGoal goal = new SunflowerGoal();
+        ChomperGoal goal = new ChomperGoal();
 
         // The Chomper Agent State
         ChomperAgentState ChomperState = new ChomperAgentState(zombiesAmount);
@@ -64,7 +64,7 @@ public class ChomperAgent extends SearchBasedAgent {
 		// Create the search strategy
 		Strategy strategy;
 		ChomperAgentState state = (ChomperAgentState) getAgentState();
-		IStepCostFunction costFunction = new CostFunction();
+
 		if (!state.getObChanged()) {
 
 	         IEstimatedCostFunction heuristic = new Heuristic();
@@ -123,13 +123,13 @@ public class ChomperAgent extends SearchBasedAgent {
 		return selectedAction;
 	}
 
-	public void changeObjective() {
-		
-		this.setProblem(new Problem(new ChomperGoal(2),
-				((ChomperAgentState) getAgentState()), operators));
-		((ChomperAgentState) getAgentState()).setObChanged(true);
-		
-	}
+//	public void changeObjective() {
+//		
+//		this.setProblem(new Problem(new ChomperGoal(2),
+//				((ChomperAgentState) getAgentState()), operators));
+//		((ChomperAgentState) getAgentState()).setObChanged(true);
+//		
+//	}
 	
 
 }

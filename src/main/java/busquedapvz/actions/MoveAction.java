@@ -41,6 +41,7 @@ public interface MoveAction {
 	    	
 	    	cellToMove.setContainsAgent(true);
 	    	chomperState.increaseCeldasVisitadas(1);
+	    	chomperState.setVisitedRow(posToMove.getY());
 	    	
 	    	//System.out.println("MOVER: " + posToMove);//TODO DEBUG
 	    	return chomperState;
@@ -95,6 +96,7 @@ public interface MoveAction {
 	    	cellToMove.setContainsAgent(true);
 	    	cellToMoveEnvironment.setContainsAgent(true);
 	    	chomperState.increaseCeldasVisitadas(1);
+	    	chomperState.setVisitedRow(posToMove.getY());
 	    	
 	    	return environmentState;
 	    	

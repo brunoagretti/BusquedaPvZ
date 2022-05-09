@@ -23,6 +23,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	Boolean obChanged;
 	int celdasVisitadas;
 	Boolean[][] plantedCells = new Boolean[9][5];
+	Boolean[] visitedRows = new Boolean[] {false,false,false,false,false};
 
 	public ChomperAgentState(Integer zombiesAmount) {
 		knownWorld = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
@@ -33,6 +34,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	public void initData(Position pos, Integer energy) {
 		this.setPosition(pos);
 		this.energy=energy;
+		visitedRows[pos.getY()]=true;
 		
 		if (position.getY() > 0)
 			lastPos = new Position(0, 0);
@@ -158,7 +160,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		Cell newWorld[][] = MapManager.copyOf(knownWorld);
 		ChomperAgentState ret = new ChomperAgentState(newWorld, Integer.valueOf(energy),
 				Integer.valueOf(zombiesAmount), new Position(position.getX(), position.getY()), new Position(lastPos.getX(), lastPos.getY()), 
-				Boolean.valueOf(obChanged), Integer.valueOf(celdasVisitadas), Arrays.copyOf(plantedCells, plantedCells.length));
+				Boolean.valueOf(obChanged), Integer.valueOf(celdasVisitadas), Arrays.copyOf(plantedCells, plantedCells.length),Arrays.copyOf(visitedRows, visitedRows.length));
 		
 		return ret;
 	}
@@ -239,6 +241,19 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	          }
 	        }
 		return unplantedCells;
+	}
+	
+	public boolean allRowsVisited() {
+		for(int i = 0 ;i<visitedRows.length;i++) {
+			if(!visitedRows[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public void setVisitedRow(int row) {
+		visitedRows[row]=true;
 	}
 
 }
