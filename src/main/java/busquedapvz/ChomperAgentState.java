@@ -22,6 +22,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 	private Position lastPos;
 	Boolean obChanged;
 	int celdasVisitadas;
+	private Integer moveObjective;
 
 	public ChomperAgentState(Integer zombiesAmount) {
 		knownWorld = new Cell[PvzEnvironment.MAP_SIZE_X][PvzEnvironment.MAP_SIZE_Y];
@@ -124,6 +125,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		else 
 			lastPos = new Position(0,4);
 		knownWorld[0][position.getY()].setContainsAgent(true);
+		moveObjective=1;
 	}
 
 	@Override
@@ -147,7 +149,7 @@ public class ChomperAgentState extends SearchBasedAgentState {
 		Cell newWorld[][] = MapManager.copyOf(knownWorld);
 		ChomperAgentState ret = new ChomperAgentState(newWorld, Integer.valueOf(energy),
 				Integer.valueOf(zombiesAmount), new Position(position.getX(), position.getY()), new Position(lastPos.getX(), lastPos.getY()), 
-				Boolean.valueOf(obChanged), celdasVisitadas);
+				Boolean.valueOf(obChanged), celdasVisitadas, Integer.valueOf(moveObjective));
 		
 		return ret;
 	}

@@ -86,7 +86,6 @@ public class PvzEnvironment extends Environment {
 			for (Integer j = 0; j < PvzEnvironment.MAP_SIZE_Y; j++) {
 				if (world[i][j] instanceof SunflowerCell) {
 					((SunflowerCell) world[i][j]).addSuns(RandomHandler.nextInt(RandomType.SunSpawns));
-					System.out.println("Soles:" + ((SunflowerCell) world[i][j]).getSunQuantity() );
 				}
 			}
 		}

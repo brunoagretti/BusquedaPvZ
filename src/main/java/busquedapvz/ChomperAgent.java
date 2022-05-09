@@ -23,11 +23,13 @@ import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 import frsf.cidisi.faia.solver.search.Strategy;
 import frsf.cidisi.faia.solver.search.UniformCostSearch;
+import lombok.Getter;
 import frsf.cidisi.faia.solver.search.IStepCostFunction;
 
-
+@Getter
 public class ChomperAgent extends SearchBasedAgent {
 	private Vector<SearchAction> operators;
+	
 	public ChomperAgent(Integer zombiesAmount) {
 		// The Chomper Goal
         SunflowerGoal goal = new SunflowerGoal();
@@ -42,11 +44,11 @@ public class ChomperAgent extends SearchBasedAgent {
         operators.addElement(new AttackUp());
         operators.addElement(new AttackLeft());
         operators.addElement(new AttackRight());
+        operators.addElement(new PlantSunflower());
         operators.addElement(new GoRight());
         operators.addElement(new GoUp());
         operators.addElement(new GoDown());
         operators.addElement(new GoLeft());
-        operators.addElement(new PlantSunflower());
         // Create the Problem which the Chomper will resolve
         Problem problem = new Problem(goal, ChomperState, operators);
         this.setProblem(problem);
@@ -118,12 +120,11 @@ public class ChomperAgent extends SearchBasedAgent {
 		return selectedAction;
 	}
 
-	public void changeObjective() {
-		
-		this.setProblem(new Problem(new ChomperGoal(2),
+	public void changeObjective(Integer moveObjective) {
+		((ChomperAgentState) getAgentState()).setMoveObjective(moveObjective);
+		this.setProblem(new Problem(new KillGoal(),
 				((ChomperAgentState) getAgentState()), operators));
 		((ChomperAgentState) getAgentState()).setObChanged(true);
-		
 	}
 	
 

@@ -51,7 +51,8 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 		PvzFrame game = new PvzFrame(environment.getEnvironmentState());
 		game.setResizable(true);
 
-		SunflowerGoal energyGatheringGoal = new SunflowerGoal();
+		SunflowerGoal sunflowerGoal = new SunflowerGoal();
+		KillGoal killGoal = new KillGoal();
 		
         do {
         	
@@ -77,11 +78,6 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
 
             System.out.println("Agent State: " + agent.getAgentState());
             System.out.println("Environment:\n" + environment);
-            
-            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
-            	System.out.println("CAMBIO DE OBJETIVO");
-            	((ChomperAgent) agent).changeObjective();
-            }
 
             //Draw map
             game.addNewState(environment.getEnvironmentState());
@@ -89,21 +85,56 @@ public class ChomperSimulator extends SearchBasedAgentSimulator {
             System.out.println("Asking the agent for an action...");
             action = agent.selectAction();
 
-        
-            
-
             if (action == null) {
                 break;
             }
 
             System.out.println("Action returned: " + action);
             System.out.println();
+
+
+            if (killGoal.isGoalState(agent.getAgentState())) {
+            	// Cycles between 1 and -1
+            	Integer moveObjective = killGoal.getMoveObjective()*-1;
+            	killGoal.setMoveObjective(moveObjective);
+            	((ChomperAgentState) agent.getAgentState()).setMoveObjective(moveObjective);
+            }
+            
+            //TODO DEBUG
+            System.out.println();
+            System.out.println(killGoal.isGoalState(agent.getAgentState()));
+            System.out.println("MOVE OBJECTIVE  " + ((ChomperAgentState) agent.getAgentState()).getMoveObjective());
+            System.out.println();
+
+            //Change the goal for the agent so he cycles
+            if(sunflowerGoal.isGoalState(agent.getAgentState())) {
+            	Integer moveObjective;
+            	if (((ChomperAgentState) agent.getAgentState()).getPosition().getY() == 0) {
+            		moveObjective= -1;
+            	} else {
+            		moveObjective = 1;
+            	}
+            	System.out.println("CAMBIO DE OBJETIVO: " + moveObjective);
+            	((ChomperAgent) agent).changeObjective(moveObjective);
+            }
             
             this.actionReturned(agent, action);
-            if(energyGatheringGoal.isGoalState(agent.getAgentState())) {
-            	System.out.println("CAMBIO DE OBJETIVO");
-            	((ChomperAgent) agent).changeObjective();
+            
+            //Change the goal for the agent so he cycles
+            if(sunflowerGoal.isGoalState(agent.getAgentState())) {
+            	Integer moveObjective;
+            	if (((ChomperAgentState) agent.getAgentState()).getPosition().getY() == 0) {
+            		moveObjective= -1;
+            	} else {
+            		moveObjective = 1;
+            	}
+            	System.out.println("CAMBIO DE OBJETIVO: " + moveObjective);
+            	((ChomperAgent) agent).changeObjective(moveObjective);
             }
+
+            
+
+
             
 //            try {
 //				Thread.sleep(1500);

@@ -20,7 +20,7 @@ public class RandomHandler {
 			break;
 			
 		case StartingAgentEnergy:
-			n = r.nextInt(18)+2;
+			n = r.nextInt(18)+5;
 			break;
 			
 		case SunSpawns:
