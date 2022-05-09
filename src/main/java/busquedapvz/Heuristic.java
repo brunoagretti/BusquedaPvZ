@@ -22,7 +22,7 @@ public class Heuristic implements IEstimatedCostFunction {
 				+ zombiesOnRow(5, map) * 4
 				+ zombiesOnRow(6, map) * 3
 				+ zombiesOnRow(7, map) * 2
-				+ zombiesOnRow(8, map) * 1);
+				+ zombiesOnRow(8, map) * 1 - chomperState.getEnergy());
 	}
 
 	private Integer zombiesOnRow(Integer column, Cell[][] map) {

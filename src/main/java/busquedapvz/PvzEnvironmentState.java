@@ -47,7 +47,8 @@ public class PvzEnvironmentState extends EnvironmentState implements Cloneable {
 	@Override
 	public void initState() {
 		
-		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); 
+//		chomperEnergy = RandomHandler.nextInt(RandomType.StartingAgentEnergy); TODO
+		chomperEnergy = 5;
 		remainingZombiesAmount = RandomHandler.nextInt(RandomType.TotalZombiesToSpawn);
 		zombiesLeftToSpawn=Integer.valueOf(remainingZombiesAmount);
 		

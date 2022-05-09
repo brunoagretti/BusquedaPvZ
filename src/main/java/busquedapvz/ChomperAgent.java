@@ -44,11 +44,11 @@ public class ChomperAgent extends SearchBasedAgent {
         operators.addElement(new AttackUp());
         operators.addElement(new AttackLeft());
         operators.addElement(new AttackRight());
+        operators.addElement(new PlantSunflower());
         operators.addElement(new GoRight());
         operators.addElement(new GoUp());
         operators.addElement(new GoDown());
         operators.addElement(new GoLeft());
-        operators.addElement(new PlantSunflower());
         // Create the Problem which the Chomper will resolve
         Problem problem = new Problem(goal, ChomperState, operators);
         this.setProblem(problem);
