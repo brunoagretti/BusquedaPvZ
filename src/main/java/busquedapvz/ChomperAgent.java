@@ -20,6 +20,8 @@ import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
 import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.DepthFirstSearch;
+import frsf.cidisi.faia.solver.search.GreedySearch;
+import frsf.cidisi.faia.solver.search.IEstimatedCostFunction;
 import frsf.cidisi.faia.solver.search.Search;
 import frsf.cidisi.faia.solver.search.Strategy;
 import frsf.cidisi.faia.solver.search.UniformCostSearch;
@@ -64,13 +66,16 @@ public class ChomperAgent extends SearchBasedAgent {
 		ChomperAgentState state = (ChomperAgentState) getAgentState();
 		IStepCostFunction costFunction = new CostFunction();
 		if (!state.getObChanged()) {
-			strategy = new BreathFirstSearch();
-//		 strategy = new UniformCostSearch(costFunction);
-//		 strategy = new DepthFirstSearch();
+
+	         IEstimatedCostFunction heuristic = new Heuristic();
+	         strategy = new GreedySearch(heuristic);
+
+
 		}else {
-			strategy = new BreathFirstSearch();
-//			 strategy = new DepthFirstSearch();
-//			 strategy = new UniformCostSearch(costFunction);
+
+	         IEstimatedCostFunction heuristic = new Heuristic();
+	         strategy = new GreedySearch(heuristic);
+
 		}
 
 		/**

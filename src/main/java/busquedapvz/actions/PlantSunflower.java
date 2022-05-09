@@ -21,7 +21,8 @@ public class PlantSunflower extends SearchAction{
 			cellToPlant = new SunflowerCell(cellToPlant.getPosition(),true,0);
 			//chomperState.decrementEnergy(1);
 			chomperState.getKnownWorld()[chomperState.getPosition().getX()][chomperState.getPosition().getY()] = cellToPlant;
-			//System.out.println("PLANTAR: " + cellToPlant.getPosition());//TODO DEBUG
+
+			chomperState.getPlantedCells()[cellToPlant.getPosition().getX()][cellToPlant.getPosition().getY()] = true;
 			return chomperState;
 		}
 			
@@ -46,7 +47,7 @@ public class PlantSunflower extends SearchAction{
 			chomperState.decrementEnergy(1);
 			environmentState.decrementChomperEnergy(1);
 			
-			
+			chomperState.getPlantedCells()[cellToPlant.getPosition().getX()][cellToPlant.getPosition().getY()] = true;
 			return environmentState;
 		}
 			
@@ -55,7 +56,6 @@ public class PlantSunflower extends SearchAction{
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "Action: PlantSunflower";
 	}
 
